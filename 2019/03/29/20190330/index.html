@@ -1,0 +1,811 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PBHRK7');</script>
+<!-- End Google Tag Manager -->
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="前端 知识 面试," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="什么是ServiceWorkerService workers 本质上充当Web应用程序与浏览器之间的代理服务器，也可以在网络可用时作为浏览器和网络间的代理。它们旨在（除其他之外）使得能够创建有效的离线体验，拦截网络请求并基于网络是否可用以及更新的资源是否驻留在服务器上来采取适当的动作。他们还允许访问推送通知和后台同步API。  PWA   在介绍ServiceWorker之前，我们先来谈谈PWA">
+<meta name="keywords" content="前端 知识 面试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端面试题《第二篇》 Service workder">
+<meta property="og:url" content="http://wurh.github.io/2019/03/29/20190330/index.html">
+<meta property="og:site_name" content="华Ing&#39;s blog">
+<meta property="og:description" content="什么是ServiceWorkerService workers 本质上充当Web应用程序与浏览器之间的代理服务器，也可以在网络可用时作为浏览器和网络间的代理。它们旨在（除其他之外）使得能够创建有效的离线体验，拦截网络请求并基于网络是否可用以及更新的资源是否驻留在服务器上来采取适当的动作。他们还允许访问推送通知和后台同步API。  PWA   在介绍ServiceWorker之前，我们先来谈谈PWA">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://wurh.github.io/images/blogs/20190330/sw-lifecycle.png">
+<meta property="og:image" content="https://wurh.github.io/images/blogs/20190330/sw2.png">
+<meta property="og:updated_time" content="2019-07-12T06:10:38.186Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端面试题《第二篇》 Service workder">
+<meta name="twitter:description" content="什么是ServiceWorkerService workers 本质上充当Web应用程序与浏览器之间的代理服务器，也可以在网络可用时作为浏览器和网络间的代理。它们旨在（除其他之外）使得能够创建有效的离线体验，拦截网络请求并基于网络是否可用以及更新的资源是否驻留在服务器上来采取适当的动作。他们还允许访问推送通知和后台同步API。  PWA   在介绍ServiceWorker之前，我们先来谈谈PWA">
+<meta name="twitter:image" content="https://wurh.github.io/images/blogs/20190330/sw-lifecycle.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://wurh.github.io/2019/03/29/20190330/"/>
+
+
+  <title> 前端面试题《第二篇》 Service workder | 华Ing's blog </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PBHRK7"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69412379-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?b3ddfb8655d8b77429e04c7a4d5bcbc1";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">华Ing's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">harder and harder</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                前端面试题《第二篇》 Service workder
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2019-03-29T08:20:00+08:00" content="2019-03-29">
+              2019-03-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端面试/" itemprop="url" rel="index">
+                    <span itemprop="name">前端面试</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2019/03/29/20190330/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/03/29/20190330/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="什么是ServiceWorker"><a href="#什么是ServiceWorker" class="headerlink" title="什么是ServiceWorker"></a>什么是ServiceWorker</h3><p>Service workers 本质上充当Web应用程序与浏览器之间的代理服务器，也可以在网络可用时作为浏览器和网络间的代理。它们旨在（除其他之外）使得能够创建有效的离线体验，拦截网络请求并基于网络是否可用以及更新的资源是否驻留在服务器上来采取适当的动作。他们还允许访问推送通知和后台同步API。</p>
+<ul>
+<li><p>PWA</p>
+<p>  在介绍ServiceWorker之前，我们先来谈谈PWA。PWA (Progressive Web Apps) 是一种 Web App 新模型，并不是具体指某一种前沿的技术或者某一个单一的知识点，，这是一个渐进式的 Web App，是通过一系列新的 Web 特性，配合优秀的 UI 交互设计，逐步的增强 Web App 的用户体验。</p>
+<ul>
+<li><p>Https环境部署</p>
+</li>
+<li><p>响应式设计，一次部署，可以在移动设备和 PC 设备上运行 在不同浏览器下可正常访问</p>
+</li>
+<li><p>浏览器离线和弱网环境可极速访问。</p>
+</li>
+<li><p>可以把 App Icon 入口添加到桌面。</p>
+</li>
+<li><p>点击 Icon 入口有类似 Native App 的动画效果。</p>
+</li>
+<li><p>灵活的热更新</p>
+<p>在PWA要求的各种能力上，关于离线环境的支持我们就需要仰赖ServiceWorker。Service workers 本质上充当Web应用程序与浏览器之间的代理服务器，也可以在网络可用时作为浏览器和网络间的代理。它们旨在（除其他之外）使得能够创建有效的离线体验，拦截网络请求并基于网络是否可用以及更新的资源是否驻留在服务器上来采取适当的动作。由于PWA是谷歌提出，那么对ServiceWorker，同样也提出一些能力要求：</p>
+</li>
+<li><p>后台消息传递</p>
+</li>
+<li><p>网络代理，转发请求，伪造响应</p>
+</li>
+<li><p>离线缓存</p>
+</li>
+<li><p>消息推送</p>
+<p>在目前阶段，ServiceWorker的主要能力集中在网络代理和离线缓存上。具体的实现上，可以理解为ServiceWorker是一个能在网页关闭时仍然运行的WebWorker。</p>
+<blockquote>
+<p>‘service workder 流程图 ‘<br><img src="https://wurh.github.io/images/blogs/20190330/sw-lifecycle.png" alt="alt text" title="流程图"></p>
+</blockquote>
+</li>
+<li><p>具体可参考  <a href="https://developers.google.com/web/fundamentals/primers/service-workers/" target="_blank" rel="noopener">https://developers.google.com/web/fundamentals/primers/service-workers/</a> 文档</p>
+<p>整个过程中一个ServiceWorker会经历：安装、激活、等待、销毁的阶段。但实际上这张图我感觉并没有清晰的解释ServiceWorker的声明周期，所以我制作了下面这张图。</p>
+<blockquote>
+<p>‘service workder 处理流程 ‘<br><img src="https://wurh.github.io/images/blogs/20190330/sw2.png" alt="alt text" title="处理流程"></p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p>Service Worker 注意事项：</p>
+<p>  由于 Workers 与主线程分开运行，因此 Service Worker 独立于与其关联的应用程序。这将导致一下结果：</p>
+<ul>
+<li><p>由于 Service Worker 没有阻塞（它被设计为完全异步），同步 XHR 和localStorage 不能在 Service Worker 中使用。</p>
+<ul>
+<li><p>当应用程序处于没有活动状态时，Service Worker 可以从服务器接收推送消息。这可以让您的应用程序向用户显示推送通知，即使它未在浏览器中打开。 注意 浏览器在没有运行的情况下是否能收到通知取决于浏览器如何与操作系统集成。例如，在桌面操作系统上，Chrome 浏览器和 Firefox 只会在浏览器运行时收到通知。然而，Android 是在接收到推送消息时唤醒任何浏览器，并且无论浏览器状态如何都将始终接收推送消息。有关更多信息，请参阅 Matt Gaunt 的 Web Push Book 中的常见问题解答。</p>
+</li>
+<li><p>Service Worker 不能直接访问 DOM。为了与页面通信，需使用 postMessage() 方法发送数据，并使用 message 事件侦听器来接收数据。</p>
+</li>
+<li><p>Service Worker 是一个可编程的网络代理，可以控制如何处理来自页面的网络请求。</p>
+</li>
+<li><p>Service Worker 只能通过 HTTPS 运行。由于 Service Worker 可以拦截网络请求并修改响应，因此会带来非常糟糕的 “man-in-the-middle” 攻击。 注意 像 Letsencrypt 这样的服务可让您免费获取 SSL 证书以安装到您的服务器上。<br>Service Worker 在不使用时变为空闲状态，并在下次需要时重新启动。你不能依赖事件之间持续存在的全局状态。如果存在需要在重新启动时保留和重用的信息，则可以使用 IndexedDB 数据库。</p>
+</li>
+<li><p>Service Worker 广泛使用 Promises，所以如果你对 Promises 不熟悉，那么你应该停止阅读并开始学习 Promises 的介绍。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="https://wurh.github.io/images/others/weixinshou.png" alt="华Ing WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="https://wurh.github.io/images/others/alifu.png" alt="华Ing Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端-知识-面试/" rel="tag">#前端 知识 面试</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/29/20190329/" rel="next" title="前端面试题《第一篇》浏览器常规存储">
+                <i class="fa fa-chevron-left"></i> 前端面试题《第一篇》浏览器常规存储
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/29/20190331/" rel="prev" title="前端面试《第三篇》HTTPS和HTTP2.0详解">
+                前端面试《第三篇》HTTPS和HTTP2.0详解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2019/03/29/20190330/"
+           data-title="前端面试题《第二篇》 Service workder" data-url="http://wurh.github.io/2019/03/29/20190330/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://wurh.github.io/images/avatar/logo.jpg?123456"
+               alt="华Ing" />
+          <p class="site-author-name" itemprop="name">华Ing</p>
+          <p class="site-description motion-element" itemprop="description">harder and harder</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">49</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wurh" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1674582564/profile?topnav=1&wvr=6" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/wu-rong-hua-56" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://fsiaonma.github.io/" title="sam博客" target="_blank">sam博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://shenjoel.github.io/" title="joel博客" target="_blank">joel博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://firewood1122.github.io" title="firewood博客" target="_blank">firewood博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://reqianduan.com" title="热前端" target="_blank">热前端</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是ServiceWorker"><span class="nav-number">1.</span> <span class="nav-text">什么是ServiceWorker</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">华Ing</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"wurh"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

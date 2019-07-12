@@ -1,0 +1,891 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PBHRK7');</script>
+<!-- End Google Tag Manager -->
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="前端 知识 面试," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="什么是柯里化？ 在计算机科学中，柯里化（Currying）是把接受多个参数的函数变换成接受一个单一参数（最初函数的第一个参数）的函数，并且返回接受余下的参数且返回结果的新函数的技术。这个技术由 Christopher Strachey 以逻辑学家 Haskell Curry 命名的，尽管它是 Moses Schnfinkel 和 Gottlob Frege 发明的。  理论看着头大？没关系，先看看">
+<meta name="keywords" content="前端 知识 面试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS中的柯里化 及 精巧的自动柯里化实现">
+<meta property="og:url" content="http://wurh.github.io/2019/07/12/201904070858/index.html">
+<meta property="og:site_name" content="华Ing&#39;s blog">
+<meta property="og:description" content="什么是柯里化？ 在计算机科学中，柯里化（Currying）是把接受多个参数的函数变换成接受一个单一参数（最初函数的第一个参数）的函数，并且返回接受余下的参数且返回结果的新函数的技术。这个技术由 Christopher Strachey 以逻辑学家 Haskell Curry 命名的，尽管它是 Moses Schnfinkel 和 Gottlob Frege 发明的。  理论看着头大？没关系，先看看">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-07-12T06:10:38.193Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS中的柯里化 及 精巧的自动柯里化实现">
+<meta name="twitter:description" content="什么是柯里化？ 在计算机科学中，柯里化（Currying）是把接受多个参数的函数变换成接受一个单一参数（最初函数的第一个参数）的函数，并且返回接受余下的参数且返回结果的新函数的技术。这个技术由 Christopher Strachey 以逻辑学家 Haskell Curry 命名的，尽管它是 Moses Schnfinkel 和 Gottlob Frege 发明的。  理论看着头大？没关系，先看看">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://wurh.github.io/2019/07/12/201904070858/"/>
+
+
+  <title> JS中的柯里化 及 精巧的自动柯里化实现 | 华Ing's blog </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PBHRK7"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69412379-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?b3ddfb8655d8b77429e04c7a4d5bcbc1";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">华Ing's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">harder and harder</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                JS中的柯里化 及 精巧的自动柯里化实现
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2019-07-12T14:10:38+08:00" content="2019-07-12">
+              2019-07-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/经验总结/" itemprop="url" rel="index">
+                    <span itemprop="name">经验总结</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2019/07/12/201904070858/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/07/12/201904070858/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="什么是柯里化？"><a href="#什么是柯里化？" class="headerlink" title="什么是柯里化？"></a>什么是柯里化？</h1><blockquote>
+<p>在计算机科学中，柯里化<strong>（Currying）</strong>是把接受多个参数的函数变换成接受一个单一参数（最初函数的第一个参数）的函数，并且返回接受余下的参数且返回结果的新函数的技术。这个技术由 <strong>Christopher Strachey</strong> 以逻辑学家 <strong>Haskell Curry</strong> 命名的，尽管它是 <strong>Moses Schnfinkel</strong> 和 <strong>Gottlob Frege</strong> 发明的。</p>
+</blockquote>
+<p>理论看着头大？没关系，先看看代码：</p>
+<h3 id="柯里化应用"><a href="#柯里化应用" class="headerlink" title="柯里化应用"></a>柯里化应用</h3><p>假设我们需要实现一个对列表元素进行某种处理的功能，比如说返回一个原列表内每一个元素加一的新列表，那么很容易想到：</p>
+<pre><code>const list = [0, 1, 2, 3];
+const list1 = list.map(elem =&gt; elem + 1); // =&gt; [1, 2, 3, 4]
+</code></pre><p>很简单是吧？如果又要加2呢？</p>
+<pre><code>const list = [0, 1, 2, 3];
+const list1 = list.map(elem =&gt; elem + 1); // =&gt; [1, 2, 3, 4]
+const list2 = list.map(elem =&gt; elem + 2); // =&gt; [2, 3, 4, 5]
+</code></pre><p>看上去效率有点低，处理函数封装下？<br>可是map的回调函数只接受当前元素 <strong>elem</strong> 这一个参数，看上去好像没有办法封装…</p>
+<p>你也许会想：如果能拿到一个<strong>部分配置好的函数</strong>就好了，比如说：</p>
+<pre><code>// plus返回部分配置好的函数
+const plus1 = plus(1);
+const plus2 = plus(2);
+
+plus1(5); // =&gt; 6
+plus2(7); // =&gt; 9
+</code></pre><p>把这样的函数传进map：</p>
+<pre><code>const list = [0, 1, 2, 3];
+const list1 = list.map(plus1); // =&gt; [1, 2, 3, 4]
+const list2 = list.map(plus2); // =&gt; [2, 3, 4, 5]
+</code></pre><p>是不是很棒棒？这样一来不管是加多少，只需要<code>list.map(plus(x))</code>就好了，完美实现了封装，可读性大大提高！ (☆ﾟ∀ﾟ)</p>
+<p>不过问题来了：<br><strong>这样的plus函数要怎么实现呢？</strong></p>
+<p><strong>这时候柯里化就能派上用场了：</strong></p>
+<h2 id="柯里化函数"><a href="#柯里化函数" class="headerlink" title="柯里化函数"></a>柯里化函数</h2><pre><code>// 原始的加法函数
+function origPlus(a, b) {
+  return a + b;
+}
+
+// 柯里化后的plus函数
+function plus(a) {
+  return function(b) {
+    return a + b;
+  }
+}
+
+// ES6写法
+const plus = a =&gt; b =&gt; a + b;
+</code></pre><p>可以看到，柯里化的 plus 函数首先接受<strong>一个参数</strong> a，然后返回一个接受<strong>一个参数</strong> b 的函数，由于<strong>闭包</strong>的原因，返回的函数可以访问到父函数的参数 a，所以举个例子：<code>const plus2 = plus(2)</code>就可等效视为<code>function plus2(b) { return 2 + b; }</code>，这样就实现了<strong>部分配置</strong>。</p>
+<p>通俗地讲，柯里化就是一个部分配置<strong>多参数函数</strong>的过程，每一步都返回一个接受<strong>单个参数</strong>的部分配置好的函数。一些极端的情况可能需要分很多次来部分配置一个函数，比如说多次相加:</p>
+<pre><code>multiPlus(1)(2)(3); // =&gt; 6
+</code></pre><p>这种写法看着很奇怪吧？不过如果入了JS的函数式编程这个大坑的话，这会是常态。（笑）</p>
+<h1 id="JS中自动柯里化的精巧实现"><a href="#JS中自动柯里化的精巧实现" class="headerlink" title="JS中自动柯里化的精巧实现"></a>JS中自动柯里化的精巧实现</h1><blockquote>
+<p>柯里化<strong>（Currying）</strong>是函数式编程中很重要的一环，很多函数式语言<strong>（eg. Haskell）</strong>都会默认将函数自动柯里化。然而JS并不会这样，因此我们需要自己来实现自动柯里化的函数。</p>
+</blockquote>
+<p>先上代码：</p>
+<pre><code>// ES5
+function curry(fn) {
+  function _c(restNum, argsList) {
+    return restNum === 0 ?
+      fn.apply(null, argsList) :
+      function(x) {
+        return _c(restNum - 1, argsList.concat(x));
+      };
+  }
+  return _c(fn.length, []);
+}
+
+// ES6
+const curry = fn =&gt; {
+  const _c = (restNum, argsList) =&gt; restNum === 0 ?
+    fn(...argsList) : x =&gt; _c(restNum - 1, [...argsList, x]);
+
+  return _c(fn.length, []);
+}
+
+/***************** 使用 *********************/
+
+var plus = curry(function(a, b) {
+  return a + b;
+});
+
+// ES6
+const plus = curry((a, b) =&gt; a + b);
+
+plus(2)(4); // =&gt; 6
+</code></pre><p>这样就实现了自动的柯里化！(╭￣3￣)╭♡</p>
+<p><strong>如果你看得懂发生了什么的话，那么恭喜你！大家口中的大佬就是你！╰(<em>°▽°</em>)╯，快留下赞然后去开始你的函数式生涯吧（滑稽</strong></p>
+<p>如果你没看懂发生了什么，别担心，我现在开始帮你理一下思路。</p>
+<h2 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h2><p>我们需要一个 curry 函数，它接受一个待柯里化的函数为参数，返回一个用于接收一个参数的函数，接收到的参数放到一个列表中，当参数数量足够时，执行原函数并返回结果。</p>
+<h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><p>简单思考可以知道，柯里化部分配置函数的步骤数等于 <strong>fn</strong> 的参数个数，也就是说有<strong>两个参数</strong>的 plus 函数需要分<strong>两步</strong>来部分配置。函数的参数个数可以通过<code>fn.length</code>获取。</p>
+<p>总的想法就是每传一次参，就把该参数放入一个参数列表 <strong>argsList</strong> 中，如果已经没有要传的参数了，那么就调用<code>fn.apply(null, argsList)</code>将原函数执行。要实现这点，我们就需要一个内部的判断函数 <strong>_c(restNum, argsList)</strong>，函数接受两个参数，一个是剩余参数个数 <strong>restNum</strong>，另一个是已获取的参数的列表 <strong>argsList</strong>；<strong>_c</strong> 的功能就是判断是否还有未传入的参数，当 <strong>restNum</strong> 为零时，就是时候通过<code>fn.apply(null, argsList)</code>执行原函数并返回结果了。如果还有参数需要传递的话，也就是说 <strong>restNum</strong> 不为零时，就需要返回一个<strong>单参数函数</strong></p>
+<pre><code>function(x) {
+  return _c(restNum - 1, argsList.concat(x));
+}
+</code></pre><p>来继续接收参数。这里形成了一个尾递归，函数接受了一个参数后，剩余需要参数数量 <strong>restNum</strong> 减一，并将新参数 <strong>x</strong> 加入 <strong>argsList</strong> 后传入 <strong>_c</strong> 进行递归调用。结果就是，当参数数量不足时，返回负责接收新参数的单参数函数，当参数够了时，就调用原函数并返回。</p>
+<p>现在再来看：</p>
+<pre><code>function curry(fn) {
+  function _c(restNum, argsList) {
+    return restNum === 0 ?
+      fn.apply(null, argsList) :
+      function(x) {
+        return _c(restNum - 1, argsList.concat(x));
+      };
+  }
+  return _c(fn.length, []); // 递归开始
+}
+</code></pre><p>是不是开始清晰起来了？ (<em>ﾟ▽ﾟ</em>)</p>
+<p>ES6写法的由于使用了 <strong>数组解构</strong> 及 <strong>箭头函数</strong> 等语法糖，看上去精简很多，不过思想都是一样的啦～</p>
+<pre><code>// ES6
+const curry = fn =&gt; {
+  const _c = (restNum, argsList) =&gt; restNum === 0 ?
+    fn(...argsList) : x =&gt; _c(restNum - 1, [...argsList, x]);
+
+  return _c(fn.length, []);
+}
+</code></pre><h1 id="与其他方法的对比"><a href="#与其他方法的对比" class="headerlink" title="与其他方法的对比"></a>与其他方法的对比</h1><p>还有一种大家常用的方法：</p>
+<pre><code>function curry(fn) {
+  const len = fn.length;
+  return function judge(...args1) {
+    return args1.length &gt;= len ?
+    fn(...args1):
+    function(...args2) {
+      return judge(...[...args1, ...args2]);
+    }
+  }
+}
+
+// 使用箭头函数
+const curry = fn =&gt; {
+  const len = fn.length;
+  const judge = (...args1) =&gt; args1.length &gt;= len ?
+    fn(...args1) : (...args2) =&gt; judge(...[...args1, ...args2]);
+  return judge;
+}
+</code></pre><p>与本篇文章先前提到的方法对比的话，发现这种方法有两个问题：</p>
+<ol>
+<li>依赖ES6的解构（函数参数中的 <strong>…args1</strong> 与 <strong>…args2</strong>）；</li>
+<li>性能稍差一点。</li>
+</ol>
+<h2 id="性能问题"><a href="#性能问题" class="headerlink" title="性能问题"></a>性能问题</h2><p>做个测试：</p>
+<pre><code>console.time(&quot;curry&quot;);
+
+const plus = curry((a, b, c, d, e) =&gt; a + b + c + d + e);
+plus(1)(2)(3)(4)(5);
+
+console.timeEnd(&quot;curry&quot;);
+</code></pre><p>在我的电脑<em>（Manjaro Linux，Intel Xeon E5 2665，32GB DDR3 四通道1333Mhz，Node.js 9.2.0）</em>上：</p>
+<ul>
+<li>本篇提到的方法耗时约 <strong>0.325ms</strong></li>
+<li>其他方法的耗时约 <strong>0.345ms</strong></li>
+</ul>
+<p>差的这一点<strong>猜测</strong>是<strong>闭包</strong>的原因。由于闭包的访问比较耗性能，而这种方式形成了两个<strong>闭包</strong>：<strong>fn</strong> 和 <strong>len</strong>，前面提到的方法只形成了 <strong>fn</strong> 一个闭包，所以造成了这一微小的差距。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="https://wurh.github.io/images/others/weixinshou.png" alt="华Ing WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="https://wurh.github.io/images/others/alifu.png" alt="华Ing Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端-知识-面试/" rel="tag">#前端 知识 面试</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/12/201905012227/" rel="next" title="react-mobx-实践记录">
+                <i class="fa fa-chevron-left"></i> react-mobx-实践记录
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/12/201907121507/" rel="prev" title="flutter 初识">
+                flutter 初识 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2019/07/12/201904070858/"
+           data-title="JS中的柯里化 及 精巧的自动柯里化实现" data-url="http://wurh.github.io/2019/07/12/201904070858/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://wurh.github.io/images/avatar/logo.jpg?123456"
+               alt="华Ing" />
+          <p class="site-author-name" itemprop="name">华Ing</p>
+          <p class="site-description motion-element" itemprop="description">harder and harder</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">49</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wurh" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1674582564/profile?topnav=1&wvr=6" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/wu-rong-hua-56" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://fsiaonma.github.io/" title="sam博客" target="_blank">sam博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://shenjoel.github.io/" title="joel博客" target="_blank">joel博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://firewood1122.github.io" title="firewood博客" target="_blank">firewood博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://reqianduan.com" title="热前端" target="_blank">热前端</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是柯里化？"><span class="nav-number">1.</span> <span class="nav-text">什么是柯里化？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#柯里化应用"><span class="nav-number">1.0.1.</span> <span class="nav-text">柯里化应用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#柯里化函数"><span class="nav-number">1.1.</span> <span class="nav-text">柯里化函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JS中自动柯里化的精巧实现"><span class="nav-number">2.</span> <span class="nav-text">JS中自动柯里化的精巧实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#需求分析"><span class="nav-number">2.1.</span> <span class="nav-text">需求分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现方式"><span class="nav-number">2.2.</span> <span class="nav-text">实现方式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#与其他方法的对比"><span class="nav-number">3.</span> <span class="nav-text">与其他方法的对比</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#性能问题"><span class="nav-number">3.1.</span> <span class="nav-text">性能问题</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">华Ing</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"wurh"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

@@ -1,0 +1,883 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PBHRK7');</script>
+<!-- End Google Tag Manager -->
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="前端," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="项目背景 业务快速增长迭代，需要多个业务平台进行支撑 公司各系统接入需要多方配合支撑，周期较长 10个人左右的前端工程师队伍 支撑8+个业务 – 繁，杂 众多专题，活动项目  需求 需要搭建可复用组件的架构 需要搭建已经包含工程化(代码压缩，合并；combo服务，实施监听代码变化等)的架构 需要灵活套用各种UI框架，提高平台逼格的架构  选型 scrat 完成模块化，工程化实现 vue 实现组件化">
+<meta name="keywords" content="前端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="scrat + vue 快速搭建组件式架构">
+<meta property="og:url" content="http://wurh.github.io/2016/08/30/20160830/index.html">
+<meta property="og:site_name" content="华Ing&#39;s blog">
+<meta property="og:description" content="项目背景 业务快速增长迭代，需要多个业务平台进行支撑 公司各系统接入需要多方配合支撑，周期较长 10个人左右的前端工程师队伍 支撑8+个业务 – 繁，杂 众多专题，活动项目  需求 需要搭建可复用组件的架构 需要搭建已经包含工程化(代码压缩，合并；combo服务，实施监听代码变化等)的架构 需要灵活套用各种UI框架，提高平台逼格的架构  选型 scrat 完成模块化，工程化实现 vue 实现组件化">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://wurh.github.io/images/blogs/20160830/scrat.png">
+<meta property="og:image" content="https://wurh.github.io/images/blogs/20160830/vue1.png">
+<meta property="og:image" content="https://wurh.github.io/images/blogs/20160830/vue2.png">
+<meta property="og:image" content="https://wurh.github.io/images/blogs/20160830/scrat-vue.png">
+<meta property="og:image" content="https://wurh.github.io/images/blogs/20160830/project3.png">
+<meta property="og:image" content="https://wurh.github.io/images/blogs/20160830/des4.png">
+<meta property="og:image" content="https://wurh.github.io/images/blogs/20160830/ori.png">
+<meta property="og:image" content="https://wurh.github.io/images/blogs/20160830/todom1.png">
+<meta property="og:updated_time" content="2019-07-12T06:10:38.184Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="scrat + vue 快速搭建组件式架构">
+<meta name="twitter:description" content="项目背景 业务快速增长迭代，需要多个业务平台进行支撑 公司各系统接入需要多方配合支撑，周期较长 10个人左右的前端工程师队伍 支撑8+个业务 – 繁，杂 众多专题，活动项目  需求 需要搭建可复用组件的架构 需要搭建已经包含工程化(代码压缩，合并；combo服务，实施监听代码变化等)的架构 需要灵活套用各种UI框架，提高平台逼格的架构  选型 scrat 完成模块化，工程化实现 vue 实现组件化">
+<meta name="twitter:image" content="https://wurh.github.io/images/blogs/20160830/scrat.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://wurh.github.io/2016/08/30/20160830/"/>
+
+
+  <title> scrat + vue 快速搭建组件式架构 | 华Ing's blog </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PBHRK7"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69412379-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?b3ddfb8655d8b77429e04c7a4d5bcbc1";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">华Ing's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">harder and harder</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                scrat + vue 快速搭建组件式架构
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-08-30T11:40:00+08:00" content="2016-08-30">
+              2016-08-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术架构/" itemprop="url" rel="index">
+                    <span itemprop="name">技术架构</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/30/20160830/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/30/20160830/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="项目背景"><a href="#项目背景" class="headerlink" title="项目背景"></a>项目背景</h1><ul>
+<li>业务快速增长迭代，需要多个业务平台进行支撑</li>
+<li>公司各系统接入需要多方配合支撑，周期较长</li>
+<li>10个人左右的前端工程师队伍</li>
+<li>支撑8+个业务 – 繁，杂</li>
+<li>众多专题，活动项目</li>
+</ul>
+<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><ul>
+<li>需要搭建可复用组件的架构</li>
+<li>需要搭建已经包含工程化(代码压缩，合并；combo服务，实施监听代码变化等)的架构</li>
+<li>需要灵活套用各种UI框架，提高平台逼格的架构</li>
+</ul>
+<h1 id="选型"><a href="#选型" class="headerlink" title="选型"></a>选型</h1><ul>
+<li>scrat 完成模块化，工程化实现</li>
+<li>vue 实现组件化，模板开发</li>
+</ul>
+<h1 id="认识-scrat"><a href="#认识-scrat" class="headerlink" title="认识 scrat"></a>认识 scrat</h1><ul>
+<li>scrat 是一个模块化的开发框架</li>
+</ul>
+<p>官网地址：<a href="http://scrat.io/#!/index" target="_blank" rel="noopener">http://scrat.io/#!/index</a></p>
+<p><img src="https://wurh.github.io/images/blogs/20160830/scrat.png" alt="alt text" title="概念图"></p>
+<p>特点如下:</p>
+<ul>
+<li>一个目录一个模块，模块包含（模板文件，脚本，样式，以及静态资源）</li>
+<li>支持模块化开发，模块间引入与nodejs保持一致</li>
+<li>支持css预处理， stylus less sass 等</li>
+<li>与nodejs服务框架（express） 完美配合，可进行前后端服务层面分离</li>
+</ul>
+<h1 id="认识-Vue"><a href="#认识-Vue" class="headerlink" title="认识 Vue"></a>认识 Vue</h1><ul>
+<li>Vue 是一个实现了web component 式开发的轻量级mvvm框架</li>
+</ul>
+<p>官网地址：<a href="http://cn.vuejs.org/" target="_blank" rel="noopener">http://cn.vuejs.org/</a></p>
+<p><img src="https://wurh.github.io/images/blogs/20160830/vue1.png" alt="alt text" title="ViewModel"></p>
+<ul>
+<li>支持数据驱动的视图，实现DOM 与 底层数据 双向绑定</li>
+</ul>
+<p><img src="https://wurh.github.io/images/blogs/20160830/vue2.png" alt="alt text" title="组件式系统"></p>
+<ul>
+<li>支持把每个界面都可以抽象成多个组件树，多个组件可构建成大型的应用</li>
+</ul>
+<h3 id="Web-Components"><a href="#Web-Components" class="headerlink" title="Web Components"></a>Web Components</h3><ul>
+<li>Custom Elements  </li>
+<li>HTML Imports</li>
+<li>Templates</li>
+<li>Shadow DOM</li>
+</ul>
+<h3 id="Custom-Elements"><a href="#Custom-Elements" class="headerlink" title="Custom Elements"></a>Custom Elements</h3><h4 id="registerElement-注册标签"><a href="#registerElement-注册标签" class="headerlink" title="registerElement  注册标签"></a>registerElement  注册标签</h4><p>你可以使用 document.registerElement 来注册一个标签，标准中为了提供 namesapce 的支持，防止冲突，规定标签类型（也可以理解为名字）需要使用 - 连接。</p>
+<p>第二个参数是标签相关的配置，主要是提供一个 prototype，这个原型对象是以 HTMLElement 等的原型为基础创建的对象。然后你便可以在 HTML 中去使用自定义的标签。如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">x-foo</span>&gt;</span><span class="tag">&lt;/<span class="name">x-foo</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="生命周期和回调"><a href="#生命周期和回调" class="headerlink" title="生命周期和回调"></a>生命周期和回调</h4><ul>
+<li><p>createdCallback<br>自定义元素注册后，在实例化之后会调用，通常多用于做元素的初始化，如插入子元素，绑定事件等。</p>
+</li>
+<li><p>attachedCallback<br>元素插入到 document 时触发。</p>
+</li>
+<li><p>detachedCallback<br>元素从 document 中移除时触发，可能会用于做类似 destroy 之类的事情。</p>
+</li>
+<li><p>attributeChangedCallback<br>元素属性变化时触发，可以用于从外到内的通信。外部通过修改元素的属性来让内部获取相关的数据并且执行对应的操作。</p>
+</li>
+</ul>
+<h4 id="扩展原有元素"><a href="#扩展原有元素" class="headerlink" title="扩展原有元素"></a>扩展原有元素</h4><h3 id="HTML-Imports"><a href="#HTML-Imports" class="headerlink" title="HTML Imports"></a>HTML Imports</h3><p>HTML Imports 是一种在 HTMLs 中引用以及复用其他的 HTML 文档的方式。这个 Import 很漂亮，可以简单理解为我们常见的模板中的 include 之类的作用。</p>
+<p>我们最常见的引入一个 css 文件的方式是：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"/css/master.css"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Web Components 现在提供多了一个这个：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"import"</span> <span class="attr">href</span>=<span class="string">"/components/header.html"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="Templates"><a href="#Templates" class="headerlink" title="Templates"></a>Templates</h3><p>其他模板引擎也有类似的东西，那么 HTML Templates 便是把这个东西官方标准化，提供了一个 template 标签来存放以后需要但是暂时不渲染的 HTML 代码。</p>
+<p>以后可以这么写了：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span> <span class="attr">id</span>=<span class="string">"template"</span>&gt;</span></span><br><span class="line">  ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="Shadow-DOM"><a href="#Shadow-DOM" class="headerlink" title="Shadow DOM"></a>Shadow DOM</h3><p>Shadow DOM 最本质的需求是需要一个隔离组件代码作用域的东西，例如我组件代码的 CSS 不能影响其他组件之类的。</p>
+<p>Shadow DOM 旨在提供一种更好地组织页面元素的方式，来为日趋复杂的页面应用提供强大支持，避免代码间的相互影响。</p>
+<ul>
+<li>以上就是对Web Components的认识</li>
+</ul>
+<h1 id="scrat-vue-会怎样"><a href="#scrat-vue-会怎样" class="headerlink" title="scrat + vue 会怎样?"></a>scrat + vue 会怎样?</h1><ul>
+<li>比方说是这样的…</li>
+</ul>
+<p><img src="https://wurh.github.io/images/blogs/20160830/scrat-vue.png" alt="alt text" title="合并"></p>
+<ul>
+<li>实际上是这样的:</li>
+</ul>
+<p>工程目录:</p>
+<p><img src="https://wurh.github.io/images/blogs/20160830/project3.png" alt="alt text" title="工程目录"></p>
+<p>整个工程基本会由4个目录组成：</p>
+<ul>
+<li>components_modules: 公用组件库 （组件生态,外部引用）</li>
+<li>components：  项目可复用的组件块</li>
+<li>server: node.js 服务层</li>
+<li>views: 工程视图区间以及第三方引用包</li>
+</ul>
+<p>工程模块间调用设计</p>
+<p><img src="https://wurh.github.io/images/blogs/20160830/des4.png" alt="alt text" title="组件依赖"></p>
+<ul>
+<li>boot.js 作为工程入口配置，负责管理工程路由转发,配置引用等</li>
+</ul>
+<p>代码块:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"><span class="keyword">var</span> router = <span class="built_in">require</span>(<span class="string">'router'</span>);  <span class="comment">//scrat 路由组件</span></span><br><span class="line"><span class="keyword">var</span> config = <span class="built_in">require</span>(<span class="string">'../config/n-config.js'</span>); </span><br><span class="line"><span class="keyword">var</span> pages = <span class="built_in">require</span>(<span class="string">'../config/p-config.js'</span>);</span><br><span class="line"><span class="comment">//----- 路由中间件 -----</span></span><br><span class="line"><span class="comment">// 页面转发加载</span></span><br><span class="line"><span class="keyword">var</span> currentPage;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadPage</span>(<span class="params">ctx, next</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> rootPage;</span><br><span class="line">    <span class="keyword">var</span> page = ctx.params.page;</span><br><span class="line">    <span class="keyword">if</span> (<span class="string">'/'</span> + ctx.params.page !== ctx.path) &#123;</span><br><span class="line">        rootPage = ctx.path.split(<span class="string">'/'</span> + page)[<span class="number">0</span>].split(<span class="string">'/'</span>)[<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> prectx = ctx;</span><br><span class="line">    <span class="keyword">if</span> (rootPage) &#123;</span><br><span class="line">        <span class="built_in">require</span>.async(pages[rootPage], <span class="function"><span class="keyword">function</span> (<span class="params">p</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (currentPage &amp;&amp; currentPage.destory) currentPage.destory(ctx);</span><br><span class="line">            currentPage = p;</span><br><span class="line">            <span class="keyword">var</span> parentcom;</span><br><span class="line">            <span class="keyword">if</span> (currentPage.init) &#123;</span><br><span class="line">                parentcom = currentPage.init(ctx);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">var</span> renpage = page;</span><br><span class="line">            parentcom.$broadcast(<span class="string">'navi-update'</span>, renpage, prectx.params.router);</span><br><span class="line">            runPage(prectx, next, page);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        runPage(ctx, next, page)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 渲染页面</span></span><br><span class="line"><span class="comment"> * @param ctx</span></span><br><span class="line"><span class="comment"> * @param next</span></span><br><span class="line"><span class="comment"> * @param page</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">runPage</span>(<span class="params">ctx, next, page</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (pages.hasOwnProperty(page)) &#123;</span><br><span class="line">        <span class="built_in">require</span>.async(pages[page], <span class="function"><span class="keyword">function</span> (<span class="params">p</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (currentPage &amp;&amp; currentPage.destory) currentPage.destory(ctx);</span><br><span class="line">            currentPage = p;</span><br><span class="line">            <span class="keyword">if</span> (currentPage.init) currentPage.init(ctx);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        next();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//----- 页面路由 -----</span></span><br><span class="line">router(<span class="string">'/:page'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">ctx, next</span>) </span>&#123;</span><br><span class="line">    sessionStorage.setItem(<span class="string">'excess'</span>, <span class="string">'page'</span>);</span><br><span class="line">    next()</span><br><span class="line">&#125;,  loadPage);</span><br><span class="line"></span><br><span class="line">router(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">ctx, next</span>) </span>&#123;</span><br><span class="line">    ctx.params.page = <span class="string">'index'</span>;</span><br><span class="line">    next();</span><br><span class="line">&#125;, loadPage);</span><br><span class="line">router(<span class="string">'*'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">ctx</span>) </span>&#123;</span><br><span class="line">    router.replace(<span class="string">'/'</span> + config.default);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    router.start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>config 作为工程前端配置目录，分别有a-config.js; p-config.js; m-config.js</li>
+</ul>
+<p>a-config.js  负责API接口配置管理</p>
+<p>代码块:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * api config</span></span><br><span class="line"><span class="comment"> * @type &#123;&#123;&#125;&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> host = <span class="string">''</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 请求类型</span></span><br><span class="line"><span class="keyword">var</span> ajaxType = &#123;</span><br><span class="line">    get: <span class="string">'GET'</span>,</span><br><span class="line">    post: <span class="string">'POST'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 请求路径</span></span><br><span class="line"><span class="keyword">var</span> path = &#123;</span><br><span class="line">	<span class="string">'login'</span> : <span class="string">'/api/login'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回码配置</span></span><br><span class="line"><span class="keyword">var</span> code = &#123;</span><br><span class="line">    common: &#123;</span><br><span class="line">        succ: <span class="number">200</span>,</span><br><span class="line">        miss: <span class="number">1001</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    ajaxType: ajaxType,</span><br><span class="line">    path: path,</span><br><span class="line">    code: code</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>p-config.js 负责页面指向配置管理</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * page config</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> pageconfig = &#123;</span><br><span class="line">    index:<span class="string">'pages/index'</span>,    <span class="comment">//首页</span></span><br><span class="line">    active:<span class="string">'pages/active'</span>,   <span class="comment">//有效过滤页</span></span><br><span class="line">    completed:<span class="string">'pages/completed'</span>   <span class="comment">//有效过滤页</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = pageconfig</span><br></pre></td></tr></table></figure>
+<p>m-config.js 负责菜单项配置管理</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *   menu config</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="keyword">default</span>: <span class="string">'index'</span>, <span class="comment">//配置默认显示页面</span></span><br><span class="line">    defaultClass: <span class="string">'fadeOutLeft animated'</span>,<span class="comment">//默认样式</span></span><br><span class="line">    menu: [</span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>util目录为全工程通用工具包</li>
+<li>common目录为全工程通用业务包</li>
+</ul>
+<ul>
+<li>page 目录为页面组件</li>
+</ul>
+<p>index 目录下会存放 index.js;index.tpl;index.styl</p>
+<p>代码块:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> tpl = __inline(<span class="string">'index.tpl'</span>);</span><br><span class="line"><span class="keyword">var</span> head = <span class="built_in">require</span>(<span class="string">'widgets/head'</span>);</span><br><span class="line"><span class="keyword">var</span> list =  <span class="built_in">require</span>(<span class="string">'widgets/list'</span>);</span><br><span class="line"><span class="keyword">var</span> footer = <span class="built_in">require</span>(<span class="string">'widgets/footer'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 首页模块</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @class index</span></span><br><span class="line"><span class="comment"> * @constructor</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> index = Vue.extend(&#123;</span><br><span class="line">    template: tpl,</span><br><span class="line">    components: &#123;</span><br><span class="line">        <span class="string">"c-head"</span>: head(),</span><br><span class="line">        <span class="string">"c-list"</span> : list(),</span><br><span class="line">        <span class="string">"c-footer"</span>:footer()</span><br><span class="line">    &#125;,</span><br><span class="line">    ready:<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.$broadcast(<span class="string">'onUpdateVis'</span>,<span class="string">'all'</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    events: &#123;</span><br><span class="line">        <span class="string">'onAddTodo'</span>: <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">           <span class="keyword">this</span>.$broadcast(<span class="string">'onAddListItem'</span>,value);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * My method description.  Like other pieces of your comment blocks,</span></span><br><span class="line"><span class="comment"> * this can span multiple lines.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @method init</span></span><br><span class="line"><span class="comment"> * @return &#123;Object&#125; Returns index page component</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> init = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> index(&#123;</span><br><span class="line">        el: <span class="string">"#page-main"</span>,</span><br><span class="line">        replace: <span class="literal">false</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    init: init</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>widgets 目录为可复用独立组件</li>
+</ul>
+<p>举个栗子head组件， head 组件目录同样会存在head.js, head.tpl, head.styl文件</p>
+<p>代码块:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 头部组件</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @class head</span></span><br><span class="line"><span class="comment"> * @constructor</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> tpl = __inline(<span class="string">'head.tpl'</span>);</span><br><span class="line"><span class="keyword">var</span> head = Vue.extend(&#123;</span><br><span class="line">    template: tpl,</span><br><span class="line">    ready: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            value:<span class="string">''</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    props: [<span class="string">'page'</span>],</span><br><span class="line">    methods: &#123;</span><br><span class="line">        addTodo: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> value = <span class="keyword">this</span>.newTodo &amp;&amp; <span class="keyword">this</span>.newTodo.trim();</span><br><span class="line">            <span class="keyword">if</span> (!value) &#123;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">this</span>.$dispatch(<span class="string">'onAddTodo'</span>,value);</span><br><span class="line">            <span class="keyword">this</span>.newTodo = <span class="string">''</span>;</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    replace: <span class="literal">false</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * My method description.  Like other pieces of your comment blocks,</span></span><br><span class="line"><span class="comment"> * this can span multiple lines.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @method init</span></span><br><span class="line"><span class="comment"> * @return &#123;Object&#125; Returns head component</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> init = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = init;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>因此一个页面的划分与组成这样的:</li>
+</ul>
+<p>原来：<br><img src="https://wurh.github.io/images/blogs/20160830/ori.png" alt="alt text" title="原来的样子"></p>
+<p>划分：<br><img src="https://wurh.github.io/images/blogs/20160830/todom1.png" alt="alt text" title="原来的样子"></p>
+<p><a href="https://github.com/wurh/scrat-vue-todoMVC" target="_blank" rel="noopener">项目demo地址</a></p>
+<ul>
+<li>大家别忘记follow我一下噢!</li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结:"></a>总结:</h1><p>当模块化的框架工程遇到组件式的框架技术，将会产生提高前端研发效率的火花!  谢谢！  麻烦打赏一下  ^_^</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="https://wurh.github.io/images/others/weixinshou.png" alt="华Ing WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="https://wurh.github.io/images/others/alifu.png" alt="华Ing Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端/" rel="tag">#前端</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/20/20160820/" rel="next" title="前端资源集合">
+                <i class="fa fa-chevron-left"></i> 前端资源集合
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/09/20161109/" rel="prev" title="IOS-scroll-trigger-fixed (第一篇)">
+                IOS-scroll-trigger-fixed (第一篇) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/30/20160830/"
+           data-title="scrat + vue 快速搭建组件式架构" data-url="http://wurh.github.io/2016/08/30/20160830/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://wurh.github.io/images/avatar/logo.jpg?123456"
+               alt="华Ing" />
+          <p class="site-author-name" itemprop="name">华Ing</p>
+          <p class="site-description motion-element" itemprop="description">harder and harder</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">49</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wurh" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1674582564/profile?topnav=1&wvr=6" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/wu-rong-hua-56" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://fsiaonma.github.io/" title="sam博客" target="_blank">sam博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://shenjoel.github.io/" title="joel博客" target="_blank">joel博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://firewood1122.github.io" title="firewood博客" target="_blank">firewood博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://reqianduan.com" title="热前端" target="_blank">热前端</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#项目背景"><span class="nav-number">1.</span> <span class="nav-text">项目背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#需求"><span class="nav-number">2.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#选型"><span class="nav-number">3.</span> <span class="nav-text">选型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#认识-scrat"><span class="nav-number">4.</span> <span class="nav-text">认识 scrat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#认识-Vue"><span class="nav-number">5.</span> <span class="nav-text">认识 Vue</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Web-Components"><span class="nav-number">5.0.1.</span> <span class="nav-text">Web Components</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Custom-Elements"><span class="nav-number">5.0.2.</span> <span class="nav-text">Custom Elements</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#registerElement-注册标签"><span class="nav-number">5.0.2.1.</span> <span class="nav-text">registerElement  注册标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#生命周期和回调"><span class="nav-number">5.0.2.2.</span> <span class="nav-text">生命周期和回调</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#扩展原有元素"><span class="nav-number">5.0.2.3.</span> <span class="nav-text">扩展原有元素</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTML-Imports"><span class="nav-number">5.0.3.</span> <span class="nav-text">HTML Imports</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Templates"><span class="nav-number">5.0.4.</span> <span class="nav-text">Templates</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Shadow-DOM"><span class="nav-number">5.0.5.</span> <span class="nav-text">Shadow DOM</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#scrat-vue-会怎样"><span class="nav-number">6.</span> <span class="nav-text">scrat + vue 会怎样?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">7.</span> <span class="nav-text">总结:</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">华Ing</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"wurh"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

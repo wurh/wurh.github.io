@@ -1,0 +1,791 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PBHRK7');</script>
+<!-- End Google Tag Manager -->
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="前端," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="Pagium 积木系统整套部署Pagium 作为积木系统，主要负责网页在前端开发实现积木式拼装，在后台通过拖拉实现页面的简单运营拼凑，最终实现研发与运营的解耦协助目前主要工程涉及如下：  pagium-server: 积木系统后端解析服务，以及平台拼装接口 pagium-backend: 积木系统运营后台,提供运营同学日常使用 vipme-poam: 积木系统日常组件开发环境以及组件库  – pa">
+<meta name="keywords" content="前端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pagium 积木系统整套部署">
+<meta property="og:url" content="http://wurh.github.io/2018/10/22/20181022/index.html">
+<meta property="og:site_name" content="华Ing&#39;s blog">
+<meta property="og:description" content="Pagium 积木系统整套部署Pagium 作为积木系统，主要负责网页在前端开发实现积木式拼装，在后台通过拖拉实现页面的简单运营拼凑，最终实现研发与运营的解耦协助目前主要工程涉及如下：  pagium-server: 积木系统后端解析服务，以及平台拼装接口 pagium-backend: 积木系统运营后台,提供运营同学日常使用 vipme-poam: 积木系统日常组件开发环境以及组件库  – pa">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-07-12T06:10:38.186Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pagium 积木系统整套部署">
+<meta name="twitter:description" content="Pagium 积木系统整套部署Pagium 作为积木系统，主要负责网页在前端开发实现积木式拼装，在后台通过拖拉实现页面的简单运营拼凑，最终实现研发与运营的解耦协助目前主要工程涉及如下：  pagium-server: 积木系统后端解析服务，以及平台拼装接口 pagium-backend: 积木系统运营后台,提供运营同学日常使用 vipme-poam: 积木系统日常组件开发环境以及组件库  – pa">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://wurh.github.io/2018/10/22/20181022/"/>
+
+
+  <title> Pagium 积木系统整套部署 | 华Ing's blog </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PBHRK7"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69412379-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?b3ddfb8655d8b77429e04c7a4d5bcbc1";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">华Ing's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">harder and harder</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Pagium 积木系统整套部署
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2018-10-22T14:20:00+08:00" content="2018-10-22">
+              2018-10-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/经验总结/" itemprop="url" rel="index">
+                    <span itemprop="name">经验总结</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2018/10/22/20181022/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/10/22/20181022/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Pagium-积木系统整套部署"><a href="#Pagium-积木系统整套部署" class="headerlink" title="Pagium 积木系统整套部署"></a>Pagium 积木系统整套部署</h1><p>Pagium 作为积木系统，主要负责网页在前端开发实现积木式拼装，在后台通过拖拉实现页面的简单运营拼凑，最终实现研发与运营的解耦协助<br>目前主要工程涉及如下：</p>
+<ul>
+<li>pagium-server: 积木系统后端解析服务，以及平台拼装接口</li>
+<li>pagium-backend: 积木系统运营后台,提供运营同学日常使用</li>
+<li>vipme-poam: 积木系统日常组件开发环境以及组件库</li>
+</ul>
+<p>–</p>
+<h3 id="pagium-server-积木后端解析服务与编译引擎"><a href="#pagium-server-积木后端解析服务与编译引擎" class="headerlink" title="pagium-server  积木后端解析服务与编译引擎"></a>pagium-server  积木后端解析服务与编译引擎</h3><h4 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h4><ul>
+<li>Node.js v6.12.0</li>
+<li>nginx v1.12.2</li>
+<li>vscode/sublime text3/webstorm</li>
+<li>mysql</li>
+<li>ftp 服务器</li>
+</ul>
+<h4 id="软件配置"><a href="#软件配置" class="headerlink" title="软件配置"></a>软件配置</h4><p>在项目根目录config.js 配置ftp服务器信息，mysql数据库信息<br>dataRootConf //指定存放项目页面文件模板的目录配置</p>
+<h5 id="配置nginx，设置服务代理"><a href="#配置nginx，设置服务代理" class="headerlink" title="配置nginx，设置服务代理"></a>配置nginx，设置服务代理</h5><p>创建pagium.conf 文件，内容如下<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">	<span class="attribute">listen</span>       <span class="number">80</span>;</span><br><span class="line">	<span class="attribute">server_name</span>  pagium.vip.vipme.com www.pagium.vip.vipme.com;</span><br><span class="line"></span><br><span class="line">	<span class="attribute">location</span> <span class="regexp">~ ^/preview/(\d*)/(.*)</span> &#123;</span><br><span class="line">		<span class="attribute">set</span> <span class="variable">$a</span> <span class="variable">$1</span>;</span><br><span class="line">		<span class="attribute">set</span> <span class="variable">$b</span> <span class="variable">$2</span>;</span><br><span class="line">		<span class="attribute">if</span> (<span class="variable">$http_user_agent</span> <span class="regexp">~* '(Android|webOS|iPhone|iPod|BlackBerry)')</span> &#123;</span><br><span class="line">			<span class="attribute">proxy_pass</span> http://127.0.0.1:3330/<span class="variable">$a</span>/m-<span class="variable">$b</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="attribute">proxy_pass</span> http://127.0.0.1:3330/<span class="variable">$a</span>/<span class="variable">$b</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="attribute">location</span> /pagium/ &#123;</span><br><span class="line">		<span class="attribute">proxy_pass</span> http://127.0.0.1:3330/;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="attribute">location</span> <span class="regexp">~ ^/api/(.*)</span> &#123;</span><br><span class="line">		<span class="attribute">proxy_pass</span> http://127.0.0.1:3334/<span class="variable">$1</span>?<span class="variable">$args</span>;</span><br><span class="line">		<span class="attribute">add_header</span> <span class="string">'Access-Control-Allow-Origin'</span> <span class="string">'*'</span>;</span><br><span class="line">		<span class="attribute">add_header</span> <span class="string">'Access-Control-Allow-Credentials'</span> <span class="string">'true'</span>;</span><br><span class="line">		<span class="attribute">add_header</span> <span class="string">'Access-Control-Allow-Methods'</span> <span class="string">'GET, POST, OPTIONS'</span>;</span><br><span class="line"></span><br><span class="line">		<span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">		<span class="attribute">proxy_http_version</span> <span class="number">1</span>.<span class="number">1</span>;</span><br><span class="line">		<span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">		<span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">		<span class="attribute">proxy_set_header</span> Host <span class="variable">$http_host</span>;</span><br><span class="line">		<span class="attribute">proxy_set_header</span> X-NginX-Proxy <span class="literal">true</span>;</span><br><span class="line">		<span class="attribute">proxy_set_header</span> Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line">		<span class="attribute">proxy_redirect</span> <span class="literal">off</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="attribute">location</span> / &#123;</span><br><span class="line">		<span class="attribute">proxy_pass</span> http://127.0.0.1:5555;</span><br><span class="line">		<span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">		<span class="attribute">proxy_redirect</span> <span class="literal">off</span>;</span><br><span class="line">		<span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">		<span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在nginx.conf内容里增加</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">include</span>       pagium.conf;</span><br></pre></td></tr></table></figure>
+<h4 id="软件安装"><a href="#软件安装" class="headerlink" title="软件安装"></a>软件安装</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd pagium-server</span><br><span class="line"></span><br><span class="line">npm install </span><br><span class="line"></span><br><span class="line">node index.js</span><br></pre></td></tr></table></figure>
+<h4 id="数据配置"><a href="#数据配置" class="headerlink" title="数据配置"></a>数据配置</h4><p>1.创建pagium数据库<br>2.执行pagium-server &gt; conf &gt; db &gt; pagium.sql 文件</p>
+<h4 id="软件执行"><a href="#软件执行" class="headerlink" title="软件执行"></a>软件执行</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node index.js</span><br></pre></td></tr></table></figure>
+<p>–</p>
+<h3 id="pagium-backend-积木系统运营后台"><a href="#pagium-backend-积木系统运营后台" class="headerlink" title="pagium-backend  积木系统运营后台"></a>pagium-backend  积木系统运营后台</h3><h4 id="开发环境-1"><a href="#开发环境-1" class="headerlink" title="开发环境"></a>开发环境</h4><ul>
+<li>Node.js v6.12.0</li>
+<li>vscode/sublime text3/webstorm</li>
+<li>scrat  v0.10.1</li>
+</ul>
+<h4 id="软件安装-1"><a href="#软件安装-1" class="headerlink" title="软件安装"></a>软件安装</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd pagium-backend</span><br><span class="line"></span><br><span class="line">npm install </span><br><span class="line"></span><br><span class="line">node index.js</span><br></pre></td></tr></table></figure>
+<h4 id="软件执行-1"><a href="#软件执行-1" class="headerlink" title="软件执行"></a>软件执行</h4><p>在项目当前目录下执行</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrat release -cwL</span><br></pre></td></tr></table></figure>
+<p>打开新命令窗口执行</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrat server start</span><br></pre></td></tr></table></figure>
+<p>–</p>
+<h3 id="vipme-poam-积木组件库开发环境"><a href="#vipme-poam-积木组件库开发环境" class="headerlink" title="vipme-poam  积木组件库开发环境"></a>vipme-poam  积木组件库开发环境</h3><h4 id="开发环境-2"><a href="#开发环境-2" class="headerlink" title="开发环境"></a>开发环境</h4><ul>
+<li>Node.js v6.12.0</li>
+<li>vscode/sublime text3/webstorm</li>
+<li>pagium  v0.0.1</li>
+</ul>
+<p>mac 环境下安装pagium 需要使用dos2unix 工具对pagium执行命令包进行编码转换</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">brew install dos2unix</span><br><span class="line"></span><br><span class="line">which pagium</span><br><span class="line"></span><br><span class="line">cd /Users/mac/.nvm/versions/node/v8<span class="number">.9</span><span class="number">.4</span>/bin</span><br><span class="line"></span><br><span class="line">dos2unix pagium</span><br></pre></td></tr></table></figure>
+<h4 id="软件安装-2"><a href="#软件安装-2" class="headerlink" title="软件安装"></a>软件安装</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd vipme-poam </span><br><span class="line"></span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+<h4 id="软件执行-2"><a href="#软件执行-2" class="headerlink" title="软件执行"></a>软件执行</h4><p>编译组件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pagium -r</span><br></pre></td></tr></table></figure>
+<p>运行页面</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pagium -s</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="https://wurh.github.io/images/others/weixinshou.png" alt="华Ing WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="https://wurh.github.io/images/others/alifu.png" alt="华Ing Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端/" rel="tag">#前端</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/28/20180828/" rel="next" title="react-router-dom 初识">
+                <i class="fa fa-chevron-left"></i> react-router-dom 初识
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/06/20181106/" rel="prev" title="Elasticsearch 初识与安装">
+                Elasticsearch 初识与安装 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2018/10/22/20181022/"
+           data-title="Pagium 积木系统整套部署" data-url="http://wurh.github.io/2018/10/22/20181022/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://wurh.github.io/images/avatar/logo.jpg?123456"
+               alt="华Ing" />
+          <p class="site-author-name" itemprop="name">华Ing</p>
+          <p class="site-description motion-element" itemprop="description">harder and harder</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">49</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wurh" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1674582564/profile?topnav=1&wvr=6" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/wu-rong-hua-56" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://fsiaonma.github.io/" title="sam博客" target="_blank">sam博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://shenjoel.github.io/" title="joel博客" target="_blank">joel博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://firewood1122.github.io" title="firewood博客" target="_blank">firewood博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://reqianduan.com" title="热前端" target="_blank">热前端</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Pagium-积木系统整套部署"><span class="nav-number">1.</span> <span class="nav-text">Pagium 积木系统整套部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pagium-server-积木后端解析服务与编译引擎"><span class="nav-number">1.0.1.</span> <span class="nav-text">pagium-server  积木后端解析服务与编译引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#开发环境"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">开发环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#软件配置"><span class="nav-number">1.0.1.2.</span> <span class="nav-text">软件配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#配置nginx，设置服务代理"><span class="nav-number">1.0.1.2.1.</span> <span class="nav-text">配置nginx，设置服务代理</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#软件安装"><span class="nav-number">1.0.1.3.</span> <span class="nav-text">软件安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据配置"><span class="nav-number">1.0.1.4.</span> <span class="nav-text">数据配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#软件执行"><span class="nav-number">1.0.1.5.</span> <span class="nav-text">软件执行</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pagium-backend-积木系统运营后台"><span class="nav-number">1.0.2.</span> <span class="nav-text">pagium-backend  积木系统运营后台</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#开发环境-1"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">开发环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#软件安装-1"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">软件安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#软件执行-1"><span class="nav-number">1.0.2.3.</span> <span class="nav-text">软件执行</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vipme-poam-积木组件库开发环境"><span class="nav-number">1.0.3.</span> <span class="nav-text">vipme-poam  积木组件库开发环境</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#开发环境-2"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">开发环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#软件安装-2"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">软件安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#软件执行-2"><span class="nav-number">1.0.3.3.</span> <span class="nav-text">软件执行</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">华Ing</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"wurh"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

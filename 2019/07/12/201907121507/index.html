@@ -1,0 +1,773 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PBHRK7');</script>
+<!-- End Google Tag Manager -->
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="跨端," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="环境介绍 flutter v1.6.3 mac os vscode    flutter 安装访问  flutter mac 安装   java 环境安装 Android studio 工具安装 xcode 工具安装 创建avd 安卓模拟器   使用flutter doctor 检查flutter安装情况  运行 flutter 第一个项目工程123456789101112flutter crea">
+<meta name="keywords" content="跨端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="flutter 初识">
+<meta property="og:url" content="http://wurh.github.io/2019/07/12/201907121507/index.html">
+<meta property="og:site_name" content="华Ing&#39;s blog">
+<meta property="og:description" content="环境介绍 flutter v1.6.3 mac os vscode    flutter 安装访问  flutter mac 安装   java 环境安装 Android studio 工具安装 xcode 工具安装 创建avd 安卓模拟器   使用flutter doctor 检查flutter安装情况  运行 flutter 第一个项目工程123456789101112flutter crea">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-07-12T07:12:15.840Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="flutter 初识">
+<meta name="twitter:description" content="环境介绍 flutter v1.6.3 mac os vscode    flutter 安装访问  flutter mac 安装   java 环境安装 Android studio 工具安装 xcode 工具安装 创建avd 安卓模拟器   使用flutter doctor 检查flutter安装情况  运行 flutter 第一个项目工程123456789101112flutter crea">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://wurh.github.io/2019/07/12/201907121507/"/>
+
+
+  <title> flutter 初识 | 华Ing's blog </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PBHRK7"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69412379-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?b3ddfb8655d8b77429e04c7a4d5bcbc1";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">华Ing's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">harder and harder</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                flutter 初识
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2019-07-12T15:07:16+08:00" content="2019-07-12">
+              2019-07-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/经验总结/" itemprop="url" rel="index">
+                    <span itemprop="name">经验总结</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2019/07/12/201907121507/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/07/12/201907121507/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="环境介绍"><a href="#环境介绍" class="headerlink" title="环境介绍"></a>环境介绍</h3><ul>
+<li>flutter v1.6.3</li>
+<li>mac os</li>
+<li>vscode  </li>
+</ul>
+<h3 id="flutter-安装"><a href="#flutter-安装" class="headerlink" title="flutter 安装"></a>flutter 安装</h3><p>访问  <a href="https://flutterchina.club/setup-macos/" target="_blank" rel="noopener">flutter mac 安装</a> </p>
+<ul>
+<li>java 环境安装</li>
+<li>Android studio 工具安装</li>
+<li>xcode 工具安装</li>
+<li>创建avd 安卓模拟器</li>
+</ul>
+<blockquote>
+<p>使用flutter doctor 检查flutter安装情况</p>
+</blockquote>
+<h3 id="运行-flutter-第一个项目工程"><a href="#运行-flutter-第一个项目工程" class="headerlink" title="运行 flutter 第一个项目工程"></a>运行 flutter 第一个项目工程</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">flutter create myfirst_flutter</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> myfirst_flutter</span><br><span class="line"></span><br><span class="line">// 查看当前虚拟机</span><br><span class="line">flutter emulators</span><br><span class="line"></span><br><span class="line">// 使用当前某个虚拟器</span><br><span class="line">flutter emulator --launch apple_ios_simulator</span><br><span class="line"></span><br><span class="line">flutter run</span><br></pre></td></tr></table></figure>
+<h3 id="flutter-文件-初始"><a href="#flutter-文件-初始" class="headerlink" title="flutter 文件 初始"></a>flutter 文件 初始</h3><ul>
+<li>lib:  flutter主要开发的源文件，存放xxx.dart</li>
+<li>pubspec.yaml: flutter 插件配置文件， 可以用过 flutter packages get 进行安装<br><a href="https://pub.dev/flutter" target="_blank" rel="noopener">flutter 插件应用市场</a></li>
+<li>android: 安卓原生代码包</li>
+<li>ios: IOS原生代码包</li>
+</ul>
+<h3 id="flutter-客户端打包"><a href="#flutter-客户端打包" class="headerlink" title="flutter 客户端打包"></a>flutter 客户端打包</h3><ul>
+<li><p><a href="https://www.jianshu.com/p/82a13d8a9167" target="_blank" rel="noopener">flutter android apk打包</a> </p>
+</li>
+<li><p><a href="https://www.jianshu.com/p/93a261ebdf67" target="_blank" rel="noopener">flutter IOS打包</a></p>
+</li>
+</ul>
+<h3 id="flutter-调试"><a href="#flutter-调试" class="headerlink" title="flutter 调试"></a>flutter 调试</h3><ul>
+<li><a href="https://www.jianshu.com/p/a2400899df3d" target="_blank" rel="noopener">flutter 常规调试方式</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="https://wurh.github.io/images/others/weixinshou.png" alt="华Ing WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="https://wurh.github.io/images/others/alifu.png" alt="华Ing Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/跨端/" rel="tag">#跨端</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/12/201904070858/" rel="next" title="JS中的柯里化 及 精巧的自动柯里化实现">
+                <i class="fa fa-chevron-left"></i> JS中的柯里化 及 精巧的自动柯里化实现
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2019/07/12/201907121507/"
+           data-title="flutter 初识" data-url="http://wurh.github.io/2019/07/12/201907121507/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://wurh.github.io/images/avatar/logo.jpg?123456"
+               alt="华Ing" />
+          <p class="site-author-name" itemprop="name">华Ing</p>
+          <p class="site-description motion-element" itemprop="description">harder and harder</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">49</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wurh" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1674582564/profile?topnav=1&wvr=6" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/wu-rong-hua-56" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://fsiaonma.github.io/" title="sam博客" target="_blank">sam博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://shenjoel.github.io/" title="joel博客" target="_blank">joel博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://firewood1122.github.io" title="firewood博客" target="_blank">firewood博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://reqianduan.com" title="热前端" target="_blank">热前端</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境介绍"><span class="nav-number">1.</span> <span class="nav-text">环境介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flutter-安装"><span class="nav-number">2.</span> <span class="nav-text">flutter 安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行-flutter-第一个项目工程"><span class="nav-number">3.</span> <span class="nav-text">运行 flutter 第一个项目工程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flutter-文件-初始"><span class="nav-number">4.</span> <span class="nav-text">flutter 文件 初始</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flutter-客户端打包"><span class="nav-number">5.</span> <span class="nav-text">flutter 客户端打包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flutter-调试"><span class="nav-number">6.</span> <span class="nav-text">flutter 调试</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">华Ing</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"wurh"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

@@ -1,0 +1,833 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PBHRK7');</script>
+<!-- End Google Tag Manager -->
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="前端 知识 面试," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="Node.js面试题列表 什么是错误优先的回调函数？ 如何避免回调地狱？ 如何用Node来监听80端口？ 什么是事件循环？ 哪些工具可以用来保证一致的编程风格？ 运算错误与程序员错误的区别？ 使用NPM有哪些好处？ 什么是stub？举个使用场景？ 什么是测试金字塔？对于HTTP API，如何利用测试金字塔？ 你最喜欢的HTTP框架，并说明原因？  现在，我们依次来解答这些问题吧。 什么是错误优先的">
+<meta name="keywords" content="前端 知识 面试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端面试《第十一篇》 Node.js相关">
+<meta property="og:url" content="http://wurh.github.io/2019/03/31/201903311132/index.html">
+<meta property="og:site_name" content="华Ing&#39;s blog">
+<meta property="og:description" content="Node.js面试题列表 什么是错误优先的回调函数？ 如何避免回调地狱？ 如何用Node来监听80端口？ 什么是事件循环？ 哪些工具可以用来保证一致的编程风格？ 运算错误与程序员错误的区别？ 使用NPM有哪些好处？ 什么是stub？举个使用场景？ 什么是测试金字塔？对于HTTP API，如何利用测试金字塔？ 你最喜欢的HTTP框架，并说明原因？  现在，我们依次来解答这些问题吧。 什么是错误优先的">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://wurh.github.io/images/blogs/201903311130/1.png">
+<meta property="og:image" content="https://wurh.github.io/images/blogs/201903311130/2.png">
+<meta property="og:image" content="https://wurh.github.io/images/blogs/201903311130/3.png">
+<meta property="og:image" content="https://wurh.github.io/images/blogs/201903311130/4.png">
+<meta property="og:updated_time" content="2019-07-12T06:10:38.187Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端面试《第十一篇》 Node.js相关">
+<meta name="twitter:description" content="Node.js面试题列表 什么是错误优先的回调函数？ 如何避免回调地狱？ 如何用Node来监听80端口？ 什么是事件循环？ 哪些工具可以用来保证一致的编程风格？ 运算错误与程序员错误的区别？ 使用NPM有哪些好处？ 什么是stub？举个使用场景？ 什么是测试金字塔？对于HTTP API，如何利用测试金字塔？ 你最喜欢的HTTP框架，并说明原因？  现在，我们依次来解答这些问题吧。 什么是错误优先的">
+<meta name="twitter:image" content="https://wurh.github.io/images/blogs/201903311130/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://wurh.github.io/2019/03/31/201903311132/"/>
+
+
+  <title> 前端面试《第十一篇》 Node.js相关 | 华Ing's blog </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PBHRK7"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69412379-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?b3ddfb8655d8b77429e04c7a4d5bcbc1";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">华Ing's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">harder and harder</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                前端面试《第十一篇》 Node.js相关
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2019-03-31T12:30:12+08:00" content="2019-03-31">
+              2019-03-31
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端面试/" itemprop="url" rel="index">
+                    <span itemprop="name">前端面试</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2019/03/31/201903311132/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/03/31/201903311132/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Node-js面试题列表"><a href="#Node-js面试题列表" class="headerlink" title="Node.js面试题列表"></a>Node.js面试题列表</h2><ul>
+<li>什么是错误优先的回调函数？</li>
+<li>如何避免回调地狱？</li>
+<li>如何用Node来监听80端口？</li>
+<li>什么是事件循环？</li>
+<li>哪些工具可以用来保证一致的编程风格？</li>
+<li>运算错误与程序员错误的区别？</li>
+<li>使用NPM有哪些好处？</li>
+<li>什么是stub？举个使用场景？</li>
+<li>什么是测试金字塔？对于HTTP API，如何利用测试金字塔？</li>
+<li>你最喜欢的HTTP框架，并说明原因？</li>
+</ul>
+<p>现在，我们依次来解答这些问题吧。</p>
+<h2 id="什么是错误优先的回调函数？"><a href="#什么是错误优先的回调函数？" class="headerlink" title="什么是错误优先的回调函数？"></a>什么是错误优先的回调函数？</h2><p>错误优先的回调函数用于传递错误和数据。第一个参数始终应该是一个错误对象， 用于检查程序是否发生了错误。其余的参数用于传递数据。例如：</p>
+<pre><code>fs.readFile(filePath, function(err, data) {  
+    if (err) {
+        //handle the error
+    }
+    // use the data object
+});
+</code></pre><p><strong>解析：</strong>这个题目的主要作用在于检查被面试者对于Node中异步操作的一些基本知识的掌握。</p>
+<h2 id="如何避免回调地狱"><a href="#如何避免回调地狱" class="headerlink" title="如何避免回调地狱"></a>如何避免回调地狱</h2><p>你可以有如下几个方法：</p>
+<ul>
+<li>模块化：将回调函数分割为独立的函数</li>
+<li>使用Promises</li>
+<li>使用<code>yield</code></li>
+<li>来计算生成器或Promise</li>
+</ul>
+<p><strong>解析：</strong>这个问题有很多种答案，取决你使用的场景，例如ES6, ES7，或者一些控制流库。</p>
+<h2 id="如何用Node监听80端口"><a href="#如何用Node监听80端口" class="headerlink" title="如何用Node监听80端口"></a>如何用Node监听80端口</h2><p>这题有陷阱！在类Unix系统中你不应该尝试去监听80端口，因为这需要超级用户权限。 因此不推荐让你的应用直接监听这个端口。</p>
+<p>目前，如果你一定要让你的应用监听80端口的话，你可以有通过在Node应用的前方再增加一层反向代理 （例如nginx）来实现，如下图所示。否则，建议你直接监听大于1024的端口。</p>
+<p><img src="https://wurh.github.io/images/blogs/201903311130/1.png" alt=""></p>
+<blockquote>
+<p>方向代理指的是以代理服务器来接收Internet上的连接请求，然后将请求转发给内部网络上的服务器， 并且将服务器返回的结果发送给客户端。</p>
+</blockquote>
+<p>关于反向代理的更多内容，建议你阅读<strong><a href="https://link.jianshu.com?t=http://www.cnblogs.com/edisonchou/p/4126742.html" target="_blank" rel="noopener">这篇文章</a></strong>。 关于如何利用nginx来为node配置方向代理的实践，可以参考<strong><a href="https://link.jianshu.com?t=https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-14-04" target="_blank" rel="noopener">这篇博文</a></strong>。</p>
+<p><strong>解释：</strong>这个问题用于检查被面试者是否有实际运行Node应用的经验。</p>
+<h2 id="什么是事件循环"><a href="#什么是事件循环" class="headerlink" title="什么是事件循环"></a>什么是事件循环</h2><p>Node采用的是单线程的处理机制（所有的I/O请求都采用非阻塞的工作方式），至少从Node.js开发者的角度是这样的。 而在底层，Node.js借助<strong><a href="https://link.jianshu.com?t=https://github.com/libuv/libuv" target="_blank" rel="noopener">libuv</a></strong>来作为抽象封装层， 从而屏蔽不同操作系统的差异，Node可以借助livuv来来实现多线程。下图表示了Node和libuv的关系。</p>
+<p><img src="https://wurh.github.io/images/blogs/201903311130/2.png" alt=""></p>
+<p>Libuv库负责Node API的执行。它将不同的任务分配给不同的线程，形成一个事件循环， 以异步的方式将任务的执行结果返回给V8引擎。可以简单用下面这张图来表示。</p>
+<p><img src="https://wurh.github.io/images/blogs/201903311130/3.png" alt=""></p>
+<p>（图片来源于网络）</p>
+<p>每一个I/O都需要一个回调函数——一旦执行完便推到事件循环上用于执行。 如果你需要更多详细的解释，可以参考<strong><a href="https://link.jianshu.com?t=https://www.youtube.com/embed/8aGhZQkoFbQ" target="_blank" rel="noopener">这个视频</a></strong>。 你也可以参考<strong><a href="https://link.jianshu.com?t=http://www.ruanyifeng.com/blog/2014/10/event-loop.html" target="_blank" rel="noopener">这篇文章</a></strong>。</p>
+<p><strong>解释：</strong>这用于检查Node.js的底层知识，例如什么是libuv，它的作用是什么。</p>
+<h2 id="哪些工具可以用来保证一致性的代码风格"><a href="#哪些工具可以用来保证一致性的代码风格" class="headerlink" title="哪些工具可以用来保证一致性的代码风格"></a>哪些工具可以用来保证一致性的代码风格</h2><p>你可以选择如下的工具：</p>
+<ul>
+<li><strong><a href="https://link.jianshu.com?t=http://jslint.com/" target="_blank" rel="noopener">JSLint</a></strong></li>
+<li><strong><a href="https://link.jianshu.com?t=http://jshint.com/" target="_blank" rel="noopener">JSHint</a></strong></li>
+<li><strong><a href="https://link.jianshu.com?t=http://eslint.org/" target="_blank" rel="noopener">ESLint</a></strong></li>
+<li><strong><a href="https://link.jianshu.com?t=http://jscs.info/" target="_blank" rel="noopener">JSCS</a> - 推荐</strong></li>
+</ul>
+<p>在团队开发中，这些工具对于编写代码非常的有帮助，能够帮助团队开发者强制执行规定的风格指南， 还能够通过静态分析捕获常见的错误。</p>
+<p><strong>解析：</strong>用于检查被面试者是否有大型项目开发经验。</p>
+<h2 id="运算错误与程序员错误的区别"><a href="#运算错误与程序员错误的区别" class="headerlink" title="运算错误与程序员错误的区别"></a>运算错误与程序员错误的区别</h2><p>运算错误并不是bug，这是和系统相关的问题，例如请求超时或者硬件故障。而程序员错误就是所谓的bug。</p>
+<p><strong>解析：</strong>这个题目和Node关系并不大，用于考察面试者的基础知识。</p>
+<h2 id="使用NPM有哪些好处？"><a href="#使用NPM有哪些好处？" class="headerlink" title="使用NPM有哪些好处？"></a>使用NPM有哪些好处？</h2><p>通过NPM，你可以安装和管理项目的依赖，并且能够指明依赖项的具体版本号。 对于Node应用开发而言，你可以通过<code>package.json</code>文件来管理项目信息，配置脚本， 以及指明项目依赖的具体版本。</p>
+<p>关于NPM的更多信息，你可以参考<strong><a href="https://link.jianshu.com?t=https://docs.npmjs.com/files/package.json" target="_blank" rel="noopener">官方文档</a></strong>。</p>
+<p><strong>解析：</strong>它能考察面试者使用npm命令的基础知识和Node.js开发的实际经验。</p>
+<h2 id="什么是Stub？举个使用场景"><a href="#什么是Stub？举个使用场景" class="headerlink" title="什么是Stub？举个使用场景"></a>什么是Stub？举个使用场景</h2><p>Stub是用于模拟一个组件或模块的函数或程序。在测试用例中， 简单的说，你可以用Stub去模拟一个方法，从而避免调用真实的方法， 使用Stub你还可以返回虚构的结果。你可以配合断言使用Stub。</p>
+<p>举个例子，在一个读取文件的场景中，当你不想读取一个真正的文件时：</p>
+<pre><code>var fs = require(&apos;fs&apos;);
+
+var readFileStub = sinon.stub(fs, &apos;readFile&apos;, function (path, cb) {  
+    return cb(null, &apos;filecontent&apos;);
+});
+
+expect(readFileStub).to.be.called;  
+readFileStub.restore(); 
+</code></pre><blockquote>
+<p>在单元测试中：Stub是完全模拟一个外部依赖，而Mock常用来判断测试通过还是失败。</p>
+</blockquote>
+<p>有关Node.js的单元测试小结，你可以参考<strong><a href="https://link.jianshu.com?t=http://segmentfault.com/a/1190000002921481" target="_blank" rel="noopener">这个链接</a></strong>。</p>
+<p><strong>解析：</strong>用于测试被面试者是否有测试的经验。如果被面试者知道什么是Stub， 那么可以继续问他是如何做单元测试的。</p>
+<h2 id="什么是测试金字塔？"><a href="#什么是测试金字塔？" class="headerlink" title="什么是测试金字塔？"></a>什么是测试金字塔？</h2><p><strong><a href="https://link.jianshu.com?t=http://zyzhang.github.io/blog/2013/04/28/test-pyramid/" target="_blank" rel="noopener">测试金字塔</a></strong>指的是： 当我们在编写测试用例时，底层的单元测试应该远比上层的端到端测试要多。</p>
+<p><img src="https://wurh.github.io/images/blogs/201903311130/4.png" alt=""></p>
+<p>当我们谈到HTTP API时，我们可能会涉及到：</p>
+<ul>
+<li>有很多针对模型的底层单元测试</li>
+<li>但你需要测试模型间如何交互时，需要减少集成测试</li>
+</ul>
+<p><strong>解析：</strong>本文主要考察被面试者的在测试方面的经验。</p>
+<h2 id="你最喜欢的HTTP框架以及原因"><a href="#你最喜欢的HTTP框架以及原因" class="headerlink" title="你最喜欢的HTTP框架以及原因"></a>你最喜欢的HTTP框架以及原因</h2><p>这题没有唯一的答案。本题主要考察被面试者对于他所使用的Node框架的理解程度， 考察他是否能够给出选择该框架的理由，优缺点等。常用的HTTP框架你可以参考<strong><a href="https://link.jianshu.com?t=http://nodeframework.com/index.html" target="_blank" rel="noopener">这个网站</a></strong>。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="https://wurh.github.io/images/others/weixinshou.png" alt="华Ing WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="https://wurh.github.io/images/others/alifu.png" alt="华Ing Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端-知识-面试/" rel="tag">#前端 知识 面试</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/31/201903310842/" rel="next" title="前端面试《第十篇》 css相关">
+                <i class="fa fa-chevron-left"></i> 前端面试《第十篇》 css相关
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/31/201903311151/" rel="prev" title="前端面试《第十二篇》侧重后端应用与对Node核心的理解">
+                前端面试《第十二篇》侧重后端应用与对Node核心的理解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2019/03/31/201903311132/"
+           data-title="前端面试《第十一篇》 Node.js相关" data-url="http://wurh.github.io/2019/03/31/201903311132/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://wurh.github.io/images/avatar/logo.jpg?123456"
+               alt="华Ing" />
+          <p class="site-author-name" itemprop="name">华Ing</p>
+          <p class="site-description motion-element" itemprop="description">harder and harder</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">49</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wurh" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1674582564/profile?topnav=1&wvr=6" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/wu-rong-hua-56" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://fsiaonma.github.io/" title="sam博客" target="_blank">sam博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://shenjoel.github.io/" title="joel博客" target="_blank">joel博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://firewood1122.github.io" title="firewood博客" target="_blank">firewood博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://reqianduan.com" title="热前端" target="_blank">热前端</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Node-js面试题列表"><span class="nav-number">1.</span> <span class="nav-text">Node.js面试题列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是错误优先的回调函数？"><span class="nav-number">2.</span> <span class="nav-text">什么是错误优先的回调函数？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何避免回调地狱"><span class="nav-number">3.</span> <span class="nav-text">如何避免回调地狱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何用Node监听80端口"><span class="nav-number">4.</span> <span class="nav-text">如何用Node监听80端口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是事件循环"><span class="nav-number">5.</span> <span class="nav-text">什么是事件循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哪些工具可以用来保证一致性的代码风格"><span class="nav-number">6.</span> <span class="nav-text">哪些工具可以用来保证一致性的代码风格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运算错误与程序员错误的区别"><span class="nav-number">7.</span> <span class="nav-text">运算错误与程序员错误的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用NPM有哪些好处？"><span class="nav-number">8.</span> <span class="nav-text">使用NPM有哪些好处？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Stub？举个使用场景"><span class="nav-number">9.</span> <span class="nav-text">什么是Stub？举个使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是测试金字塔？"><span class="nav-number">10.</span> <span class="nav-text">什么是测试金字塔？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#你最喜欢的HTTP框架以及原因"><span class="nav-number">11.</span> <span class="nav-text">你最喜欢的HTTP框架以及原因</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">华Ing</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"wurh"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

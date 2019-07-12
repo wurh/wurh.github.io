@@ -1,0 +1,763 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PBHRK7');</script>
+<!-- End Google Tag Manager -->
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="跨端," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="环境介绍 react 16.8.2 antd 3.13.4 mobx 5.9.4 mobx-react 5.4.3  安装依赖1234567yarn add mobx  or npm i mobx --saveyarn add mobx-react  or npm i mobx-react --save//支持mobx装饰器yarn add @babel/plugin-proposal-decor">
+<meta name="keywords" content="跨端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react-mobx-实践记录">
+<meta property="og:url" content="http://wurh.github.io/2019/07/12/201905012227/index.html">
+<meta property="og:site_name" content="华Ing&#39;s blog">
+<meta property="og:description" content="环境介绍 react 16.8.2 antd 3.13.4 mobx 5.9.4 mobx-react 5.4.3  安装依赖1234567yarn add mobx  or npm i mobx --saveyarn add mobx-react  or npm i mobx-react --save//支持mobx装饰器yarn add @babel/plugin-proposal-decor">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-07-12T07:12:29.499Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="react-mobx-实践记录">
+<meta name="twitter:description" content="环境介绍 react 16.8.2 antd 3.13.4 mobx 5.9.4 mobx-react 5.4.3  安装依赖1234567yarn add mobx  or npm i mobx --saveyarn add mobx-react  or npm i mobx-react --save//支持mobx装饰器yarn add @babel/plugin-proposal-decor">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://wurh.github.io/2019/07/12/201905012227/"/>
+
+
+  <title> react-mobx-实践记录 | 华Ing's blog </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PBHRK7"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69412379-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?b3ddfb8655d8b77429e04c7a4d5bcbc1";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">华Ing's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">harder and harder</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                react-mobx-实践记录
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2019-07-12T14:10:38+08:00" content="2019-07-12">
+              2019-07-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/经验总结/" itemprop="url" rel="index">
+                    <span itemprop="name">经验总结</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2019/07/12/201905012227/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/07/12/201905012227/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="环境介绍"><a href="#环境介绍" class="headerlink" title="环境介绍"></a>环境介绍</h3><ul>
+<li>react 16.8.2</li>
+<li>antd 3.13.4</li>
+<li>mobx 5.9.4</li>
+<li>mobx-react 5.4.3</li>
+</ul>
+<h3 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">yarn add mobx  or npm i mobx --save</span><br><span class="line"></span><br><span class="line">yarn add mobx-react  or npm i mobx-react --save</span><br><span class="line"></span><br><span class="line">//支持mobx装饰器</span><br><span class="line">yarn add @babel/plugin-proposal-decorators or npm i @babel/plugin-proposal-decorators --save</span><br></pre></td></tr></table></figure>
+<p>在package.json 增加</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">"babel": &#123;</span><br><span class="line">   "plugins": [</span><br><span class="line">     [</span><br><span class="line">       <span class="string">"@babel/plugin-proposal-decorators"</span>,</span><br><span class="line">       &#123;</span><br><span class="line">         <span class="attr">"legacy"</span>: <span class="literal">true</span></span><br><span class="line">       &#125;</span><br><span class="line">     ]</span><br><span class="line">   ],</span><br><span class="line">   "presets": [</span><br><span class="line">     <span class="string">"react-app"</span></span><br><span class="line">   ]</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>如果是antd 项目的话，需要在config-overrides.js 文件下如下配置：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; override, fixBabelImports, addLessLoader,addDecoratorsLegacy &#125; = <span class="built_in">require</span>(<span class="string">'customize-cra'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = override(</span><br><span class="line">  fixBabelImports(<span class="string">'import'</span>, &#123;</span><br><span class="line">    libraryName: <span class="string">'antd'</span>,</span><br><span class="line">    libraryDirectory: <span class="string">'es'</span>,</span><br><span class="line">    style: <span class="literal">true</span>,</span><br><span class="line">  &#125;),</span><br><span class="line">  addLessLoader(&#123;</span><br><span class="line">    javascriptEnabled: <span class="literal">true</span>,</span><br><span class="line">    modifyVars: &#123; <span class="string">'@primary-color'</span>: <span class="string">'#25b864'</span> &#125;,</span><br><span class="line">  &#125;),</span><br><span class="line">  <span class="comment">//主要增加这个</span></span><br><span class="line">  addDecoratorsLegacy()</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h3 id="mobx介绍"><a href="#mobx介绍" class="headerlink" title="mobx介绍"></a>mobx介绍</h3><p>长话短说 具体查看 <a href="https://cn.mobx.js.org/" target="_blank" rel="noopener">mobx介绍</a></p>
+<h3 id="mobx-实践使用"><a href="#mobx-实践使用" class="headerlink" title="mobx 实践使用"></a>mobx 实践使用</h3><h4 id="全局配置provider-（伪代码如下）"><a href="#全局配置provider-（伪代码如下）" class="headerlink" title="全局配置provider （伪代码如下）"></a>全局配置provider （伪代码如下）</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Provider &#125; <span class="keyword">from</span> <span class="string">'mobx-react'</span></span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">'./stores/index'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> App = <span class="function"><span class="params">()</span> =&gt;</span> (</span><br><span class="line">	&lt;Provider &#123;...store&#125;&gt;</span><br><span class="line">		&lt;Router&gt;</span><br><span class="line">					&lt;AppLayout&gt;<span class="xml"><span class="tag">&lt;/<span class="name">AppLayout</span>&gt;</span></span></span><br><span class="line">					&lt;MyRouter&gt;<span class="xml"><span class="tag">&lt;/<span class="name">MyRouter</span>&gt;</span></span></span><br><span class="line">		&lt;<span class="regexp">/Router&gt;</span></span><br><span class="line"><span class="regexp">	&lt;/</span>Provider&gt;</span><br><span class="line"></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h4 id="项目目录创建stores目录，同时创建index-js"><a href="#项目目录创建stores目录，同时创建index-js" class="headerlink" title="项目目录创建stores目录，同时创建index.js"></a>项目目录创建stores目录，同时创建index.js</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  stores/index.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> operateStore <span class="keyword">from</span> <span class="string">'./OperateStore'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    operateStore</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="对于业务store代码如下"><a href="#对于业务store代码如下" class="headerlink" title="对于业务store代码如下"></a>对于业务store代码如下</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; observable, computed, autorun, action &#125; <span class="keyword">from</span> <span class="string">'mobx'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">operateStore</span> </span>&#123;</span><br><span class="line">    @observable list = [];</span><br><span class="line"></span><br><span class="line">    @computed get getHomeList()&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">46</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">this</span>.list.push(&#123;</span><br><span class="line">              key: i,</span><br><span class="line">              name: <span class="string">`Edward King <span class="subst">$&#123;i&#125;</span>`</span>,</span><br><span class="line">              age: <span class="number">3</span> + <span class="string">`<span class="subst">$&#123;i&#125;</span>`</span>,</span><br><span class="line">              address: <span class="string">`London, Park Lane no. <span class="subst">$&#123;i&#125;</span>`</span>,</span><br><span class="line">            &#125;);</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">return</span> <span class="keyword">this</span>.list</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 添加用户数据</span></span><br><span class="line">    @action </span><br><span class="line">    addTodo(item)&#123;</span><br><span class="line">        <span class="keyword">this</span>.list.push(item);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> operateStore();</span><br></pre></td></tr></table></figure>
+<h4 id="在页面使用伪代码块如下"><a href="#在页面使用伪代码块如下" class="headerlink" title="在页面使用伪代码块如下"></a>在页面使用伪代码块如下</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; observer,inject &#125; <span class="keyword">from</span> <span class="string">'mobx-react'</span></span><br><span class="line"></span><br><span class="line">@inject(<span class="function"><span class="params">stores</span> =&gt;</span> (&#123;</span><br><span class="line">    operateStore: stores.operateStore,</span><br><span class="line">&#125;))</span><br><span class="line">@observer</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OHome</span> <span class="keyword">extends</span> <span class="title">Component</span></span>&#123;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">    render()&#123;</span><br><span class="line">        <span class="keyword">const</span> &#123; loading, selectedRowKeys &#125; = <span class="keyword">this</span>.state;</span><br><span class="line">        <span class="keyword">let</span> operateStore = <span class="keyword">this</span>.props.operateStore</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">             ...</span><br><span class="line">                &lt;Table columns=&#123;columns&#125; dataSource=&#123; operateStore.getHomeList&#125; style=&#123;&#123;<span class="attr">marginTop</span>:<span class="string">'20px'</span>&#125;&#125;/&gt;</span><br><span class="line">            &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">        );</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>mobx目前算是较为简单的react 数据状态管理，更深入的使用介绍请关注后续介绍</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="https://wurh.github.io/images/others/weixinshou.png" alt="华Ing WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="https://wurh.github.io/images/others/alifu.png" alt="华Ing Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/跨端/" rel="tag">#跨端</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/12/201904081058/" rel="next" title="闭包概念与应用">
+                <i class="fa fa-chevron-left"></i> 闭包概念与应用
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/12/201904070858/" rel="prev" title="JS中的柯里化 及 精巧的自动柯里化实现">
+                JS中的柯里化 及 精巧的自动柯里化实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2019/07/12/201905012227/"
+           data-title="react-mobx-实践记录" data-url="http://wurh.github.io/2019/07/12/201905012227/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://wurh.github.io/images/avatar/logo.jpg?123456"
+               alt="华Ing" />
+          <p class="site-author-name" itemprop="name">华Ing</p>
+          <p class="site-description motion-element" itemprop="description">harder and harder</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">49</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wurh" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1674582564/profile?topnav=1&wvr=6" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/wu-rong-hua-56" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://fsiaonma.github.io/" title="sam博客" target="_blank">sam博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://shenjoel.github.io/" title="joel博客" target="_blank">joel博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://firewood1122.github.io" title="firewood博客" target="_blank">firewood博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://reqianduan.com" title="热前端" target="_blank">热前端</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境介绍"><span class="nav-number">1.</span> <span class="nav-text">环境介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装依赖"><span class="nav-number">2.</span> <span class="nav-text">安装依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mobx介绍"><span class="nav-number">3.</span> <span class="nav-text">mobx介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mobx-实践使用"><span class="nav-number">4.</span> <span class="nav-text">mobx 实践使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#全局配置provider-（伪代码如下）"><span class="nav-number">4.1.</span> <span class="nav-text">全局配置provider （伪代码如下）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#项目目录创建stores目录，同时创建index-js"><span class="nav-number">4.2.</span> <span class="nav-text">项目目录创建stores目录，同时创建index.js</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对于业务store代码如下"><span class="nav-number">4.3.</span> <span class="nav-text">对于业务store代码如下</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在页面使用伪代码块如下"><span class="nav-number">4.4.</span> <span class="nav-text">在页面使用伪代码块如下</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">华Ing</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"wurh"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

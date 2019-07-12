@@ -1,0 +1,909 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PBHRK7');</script>
+<!-- End Google Tag Manager -->
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="前端 知识 面试," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="目录  &amp;emsp;1.对webpack的了解 &amp;emsp;2.webpack，里面的webpack.config.js怎么配置 &amp;emsp;3.webpack本地开发怎么解决跨域的 &amp;emsp;4.如何配置多入口文件 &amp;emsp;5. webpack与grunt、gulp的不同 &amp;emsp;6. 有哪些常见的Loader？他们是解决什么问题的 &amp;emsp;7. 有哪些常见的Plugin？他们是解">
+<meta name="keywords" content="前端 知识 面试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端面试《第十四篇》 webpack">
+<meta property="og:url" content="http://wurh.github.io/2019/03/31/201904010024/index.html">
+<meta property="og:site_name" content="华Ing&#39;s blog">
+<meta property="og:description" content="目录  &amp;emsp;1.对webpack的了解 &amp;emsp;2.webpack，里面的webpack.config.js怎么配置 &amp;emsp;3.webpack本地开发怎么解决跨域的 &amp;emsp;4.如何配置多入口文件 &amp;emsp;5. webpack与grunt、gulp的不同 &amp;emsp;6. 有哪些常见的Loader？他们是解决什么问题的 &amp;emsp;7. 有哪些常见的Plugin？他们是解">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-07-12T06:10:38.190Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端面试《第十四篇》 webpack">
+<meta name="twitter:description" content="目录  &amp;emsp;1.对webpack的了解 &amp;emsp;2.webpack，里面的webpack.config.js怎么配置 &amp;emsp;3.webpack本地开发怎么解决跨域的 &amp;emsp;4.如何配置多入口文件 &amp;emsp;5. webpack与grunt、gulp的不同 &amp;emsp;6. 有哪些常见的Loader？他们是解决什么问题的 &amp;emsp;7. 有哪些常见的Plugin？他们是解">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://wurh.github.io/2019/03/31/201904010024/"/>
+
+
+  <title> 前端面试《第十四篇》 webpack | 华Ing's blog </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PBHRK7"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69412379-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?b3ddfb8655d8b77429e04c7a4d5bcbc1";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">华Ing's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">harder and harder</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                前端面试《第十四篇》 webpack
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2019-03-31T15:31:12+08:00" content="2019-03-31">
+              2019-03-31
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端面试/" itemprop="url" rel="index">
+                    <span itemprop="name">前端面试</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2019/03/31/201904010024/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/03/31/201904010024/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1>目录</h1>
+
+<p>&emsp;<a href="#w1">1.对webpack的了解</a></p>
+<p>&emsp;<a href="#w2">2.webpack，里面的webpack.config.js怎么配置</a></p>
+<p>&emsp;<a href="#w3">3.webpack本地开发怎么解决跨域的</a></p>
+<p>&emsp;<a href="#w4">4.如何配置多入口文件</a></p>
+<p>&emsp;<a href="#w5">5. webpack与grunt、gulp的不同</a></p>
+<p>&emsp;<a href="#w6">6. 有哪些常见的Loader？他们是解决什么问题的</a></p>
+<p>&emsp;<a href="#w7">7. 有哪些常见的Plugin？他们是解决什么问题的</a></p>
+<p>&emsp;<a href="#w8">8. Loader和Plugin的不同</a></p>
+<p>&emsp;<a href="#w9">9. webpack的构建流程是什么</a></p>
+<p>&emsp;<a href="#w10">10. 是否写过Loader和Plugin？描述一下编写loader或plugin的思路</a></p>
+<p>&emsp;<a href="#w11">11. webpack的热更新是如何做到的？说明其原理</a></p>
+<p>&emsp;<a href="#w12">12. 如何利用webpack来优化前端性能</a></p>
+<p>&emsp;<a href="#w13">13. 如何提高webpack的构建速度</a></p>
+<p>&emsp;<a href="#w14">14. 怎么配置单页应用？怎么配置多页应用</a></p>
+<p>&emsp;<a href="#w15">15. 什么是bundle,什么是chunk，什么是module</a></p>
+<h5 id="w1">1. 对webpack的了解</h5>
+
+<p><a href="https://www.webpackjs.com/concepts/" target="_blank" rel="noopener">官方文档</a></p>
+<blockquote>
+<p>本质上，webpack 是一个现代 JavaScript 应用程序的静态模块打包器(module bundler)，将项目当作一个整体，通过一个给定的的主文件，webpack将从这个文件开始找到你的项目的所有依赖文件，使用loaders处理它们，最后打包成一个或多个浏览器可识别的js文件</p>
+</blockquote>
+<p>核心概念：</p>
+<ul>
+<li>入口(entry)</li>
+</ul>
+<p>入口起点<code>(entry point)</code>指示 <code>webpack</code> 应该使用哪个模块，来作为构建其内部依赖图的开始</p>
+<p>可以通过在 <code>webpack</code> 配置中配置 <code>entry</code> 属性，来指定一个入口起点（或多个入口起点）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">'./path/to/my/entry/file.js'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>输出(output)</li>
+</ul>
+<p><code>output</code> 属性告诉 <code>webpack</code> 在哪里输出它所创建的 <code>bundles</code>，以及如何命名这些文件，默认值为 <code>./dist</code></p>
+<ul>
+<li>loader</li>
+</ul>
+<p><code>loader</code> 让 <code>webpack</code> 能够去处理那些非 <code>JavaScript</code> 文件（<code>webpack</code> 自身只理解 <code>JavaScript</code>）</p>
+<ul>
+<li>插件(plugins)</li>
+</ul>
+<p><code>loader</code> 被用于转换某些类型的模块，而插件则可以用于执行范围更广的任务。插件的范围包括，从打包优化和压缩，一直到重新定义环境中的变量</p>
+<ul>
+<li>模式</li>
+</ul>
+<p>通过选择 <code>development</code> 或 <code>production</code> 之中的一个，来设置 <code>mode</code> 参数，你可以启用相应模式下的 <code>webpack</code> 内置的优化</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  mode: <span class="string">'production'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h5 id="w2">2. webpack，里面的webpack.config.js怎么配置</h5>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry:<span class="string">'./entry.js'</span>,  <span class="comment">//入口文件</span></span><br><span class="line">    </span><br><span class="line">    output:&#123;</span><br><span class="line">        <span class="comment">//node.js中__dirname变量获取当前模块文件所在目录的完整绝对路径</span></span><br><span class="line">        path:__dirname, <span class="comment">//输出位置</span></span><br><span class="line">        filename:<span class="string">'build.js'</span> <span class="comment">//输入文件</span></span><br><span class="line">    &#125;,</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">module</span>:&#123;  </span><br><span class="line">        <span class="comment">// 关于模块的加载相关，我们就定义在module.loaders中</span></span><br><span class="line">        <span class="comment">// 这里通过正则表达式去匹配不同后缀的文件名，然后给它们定义不同的加载器。</span></span><br><span class="line">        <span class="comment">// 比如说给less文件定义串联的三个加载器（！用来定义级联关系）：</span></span><br><span class="line">        rules:[</span><br><span class="line">          &#123;</span><br><span class="line">            test:<span class="regexp">/\.css$/</span>,      <span class="comment">//支持正则</span></span><br><span class="line">            loader:<span class="string">'style-loader!css-loader'</span></span><br><span class="line">          &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//配置服务</span></span><br><span class="line">    devServer:&#123;</span><br><span class="line">        hot:<span class="literal">true</span>, <span class="comment">//启用热模块替换</span></span><br><span class="line">        inline:<span class="literal">true</span> </span><br><span class="line">        <span class="comment">//此模式支持热模块替换：热模块替换的好处是只替换更新的部分,而不是页面重载.</span></span><br><span class="line">    &#125;,</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//其他解决方案配置</span></span><br><span class="line">    resolve:&#123; </span><br><span class="line">        extensions:[<span class="string">''</span>,<span class="string">'.js'</span>,<span class="string">'.json'</span>,<span class="string">'.css'</span>,<span class="string">'.scss'</span>]  </span><br><span class="line">    &#125;,</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//插件</span></span><br><span class="line">    plugins:[</span><br><span class="line">        <span class="keyword">new</span> webpack.BannerPlugin(<span class="string">'This file is create by baibai'</span>)</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="w3">3. webpack本地开发怎么解决跨域的</h5>
+
+<ul>
+<li>下载 webpack-dev-server 插件</li>
+<li>配置 webpack.config.js 文件</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> WebpackDevServer = <span class="built_in">require</span>(<span class="string">"webpack-dev-server"</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    ...</span><br><span class="line">    </span><br><span class="line">    devServer: &#123;</span><br><span class="line">        ...</span><br><span class="line">        port: <span class="string">'8088'</span>, <span class="comment">//设置端口号</span></span><br><span class="line">        <span class="comment">// 代理设置</span></span><br><span class="line">        proxy: &#123;</span><br><span class="line">            <span class="string">'/api'</span>: &#123;</span><br><span class="line">                target: <span class="string">'http://localhost:80/index.php'</span>, <span class="comment">// 目标代理</span></span><br><span class="line">                pathRewrite: &#123;<span class="string">'^/api'</span> : <span class="string">''</span>&#125;, <span class="comment">// 重写路径</span></span><br><span class="line">                secure: <span class="literal">false</span>, <span class="comment">// 是否接受运行在 HTTPS 上</span></span><br><span class="line">                </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="w4">4. 如何配置多入口文件</h5>
+
+<blockquote>
+<p>配置多个入口文件</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">entry: &#123;</span><br><span class="line">  home: resolve(__dirname, <span class="string">"src/home/index.js"</span>),</span><br><span class="line">  about: resolve(__dirname, <span class="string">"src/about/index.js"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="w5">5. webpack与grunt、gulp的不同</h5>
+
+<blockquote>
+<p>三者都是前端构建工具</p>
+</blockquote>
+<blockquote>
+<p><code>grunt</code> 和 <code>gulp</code> 是基于任务和流的。找到一个（或一类）文件，对其做一系列链式操作，更新流上的数据， 整条链式操作构成了一个任务，多个任务就构成了整个web的构建流程</p>
+</blockquote>
+<blockquote>
+<p><code>webpack</code> 是基于入口的。<code>webpack</code> 会自动地递归解析入口所需要加载的所有资源文件，然后用不同的<code>Loader</code> 来处理不同的文件，用 <code>Plugin</code> 来扩展 <code>webpack</code> 功能</p>
+</blockquote>
+<blockquote>
+<p><code>webpack</code> 与前者最大的不同就是支持代码分割，模块化（AMD,CommonJ,ES2015），全局分析</p>
+</blockquote>
+<p><a href="https://webpack.docschina.org/concepts/why-webpack/" target="_blank" rel="noopener">为什么选择webpack</a></p>
+<h5 id="w6">6. 有哪些常见的Loader？他们是解决什么问题的</h5>
+
+<ul>
+<li><code>css-loader</code>：加载 <code>CSS</code>，支持模块化、压缩、文件导入等特性</li>
+<li><code>style-loader</code>：把 <code>CSS</code> 代码注入到 <code>JavaScript 中</code>，通过 <code>DOM</code> 操作去加载 <code>CSS</code></li>
+<li><code>slint-loader</code>：通过 <code>SLint</code> 检查 <code>JavaScript</code> 代码</li>
+<li><code>babel-loader</code>：把 <code>ES6</code> 转换成 <code>ES5</code></li>
+<li><code>file-loader</code>：把文件输出到一个文件夹中，在代码中通过相对 <code>URL</code> 去引用输出的文件</li>
+<li><code>url-loader</code>：和 <code>file-loader</code> 类似，但是能在文件很小的情况下以 <code>base64</code> 的方式把文件内容注入到代码中去</li>
+</ul>
+<h5 id="w7">7. 有哪些常见的Plugin？他们是解决什么问题的</h5>
+
+<ul>
+<li><code>define-plugin</code>：定义环境变量</li>
+<li><code>commons-chunk-plugin</code>：提取公共代码</li>
+</ul>
+<h5 id="w8">8. Loader和Plugin的不同</h5>
+
+<ul>
+<li>loader 加载器</li>
+</ul>
+<blockquote>
+<p><code>Webpack</code> 将一切文件视为模块，但是 <code>webpack</code> 原生是只能解析 <code>js</code> 文件. <code>Loader</code> 的作用是让 <code>webpack</code> 拥有了加载和解析非 <code>JavaScript</code> 文件的能力</p>
+</blockquote>
+<blockquote>
+<p>在 <code>module.rules</code> 中配置，也就是说他作为模块的解析规则而存在，类型为数组</p>
+</blockquote>
+<ul>
+<li>Plugin 插件</li>
+</ul>
+<blockquote>
+<p>扩展 <code>webpack</code> 的功能，让 <code>webpack</code> 具有更多的灵活性</p>
+</blockquote>
+<blockquote>
+<p>在 <code>plugins</code> 中单独配置。类型为数组，每一项是一个 <code>plugin</code> 的实例，参数都通过构造函数传入</p>
+</blockquote>
+<h5 id="w9">9. webpack的构建流程是什么</h5>
+
+<ol>
+<li>初始化参数：从配置文件和 <code>Shell</code> 语句中读取与合并参数，得出最终的参数</li>
+<li>开始编译：用上一步得到的参数初始化 <code>Compiler</code> 对象，加载所有配置的插件，执行对象的 <code>run</code> 方法开始执行编译</li>
+<li>确定入口：根据配置中的 <code>entry</code> 找出所有的入口文件</li>
+<li>编译模块：从入口文件出发，调用所有配置的 <code>Loader</code> 对模块进行翻译，再找出该模块依赖的模块，再递归本步骤直到所有入口依赖的文件都经过了本步骤的处理</li>
+<li>完成模块编译：在经过第4步使用 <code>Loader</code> 翻译完所有模块后，得到了每个模块被翻译后的最终内容以及它们之间的依赖关系</li>
+<li>输出资源：根据入口和模块之间的依赖关系，组装成一个个包含多个模块的 <code>Chunk</code>，再把每个 <code>Chunk</code> 转换成一个单独的文件加入到输出列表，这步是可以修改输出内容的最后机会</li>
+<li>输出完成：在确定好输出内容后，根据配置确定输出的路径和文件名，把文件内容写入到文件系统</li>
+</ol>
+<blockquote>
+<p>在以上过程中，<code>Webpack</code> 会在特定的时间点广播出特定的事件，插件在监听到感兴趣的事件后会执行特定的逻辑，并且插件可以调用 <code>Webpack</code> 提供的 <code>API</code> 改变 <code>Webpack</code> 的运行结果</p>
+</blockquote>
+<h5 id="w10">10. 是否写过Loader和Plugin？描述一下编写loader或plugin的思路</h5>
+
+<blockquote>
+<p>编写 <code>Loader</code> 时要遵循单一原则，每个 <code>Loader</code> 只做一种”转义”工作。 每个 <code>Loader</code> 的拿到的是源文件内容<code>（source）</code>，可以通过返回值的方式将处理后的内容输出，也可以调用 <code>this.callback()</code> 方法，将内容返回给 <code>webpack</code> 。 还可以通过 <code>this.async()</code>生成一个 <code>callback</code> 函数，再用这个 <code>callback`</code> 将处理后的内容输出出去</p>
+</blockquote>
+<blockquote>
+<p>相对于 <code>Loader</code> 而言，<code>Plugin</code> 的编写就灵活了许多。 <code>webpack</code> 在运行的生命周期中会广播出许多事件，<code>Plugin</code> 可以监听这些事件，在合适的时机通过 <code>Webpack</code> 提供的 <code>API</code> 改变输出结果</p>
+</blockquote>
+<h5 id="w11">11. webpack的热更新是如何做到的？说明其原理</h5>
+
+<p>具体可以参考 <a href="https://github.com/Jocs/jocs.github.io/issues/15" target="_blank" rel="noopener">这里</a></p>
+<h5 id="w12">12. 如何利用webpack来优化前端性能</h5>
+
+<ul>
+<li>压缩代码。删除多余的代码、注释、简化代码的写法等等方式</li>
+<li>利用 <code>CDN</code> 加速。在构建过程中，将引用的静态资源路径修改为 <code>CDN</code> 上对应的路径</li>
+<li>删除死代码 <code>Tree Shaking）</code>。将代码中永远不会走到的片段删除掉</li>
+<li>优化图片，对于小图可以使用 <code>base64</code> 的方式写入文件中</li>
+<li>按照路由拆分代码，实现按需加载，提取公共代码</li>
+<li>给打包出来的文件名添加哈希，实现浏览器缓存文件</li>
+</ul>
+<h5 id="w13">13. 如何提高webpack的构建速度</h5>
+
+<p>参考 <a href="https://gaodaqian.com/webpack4/11%E6%8F%90%E5%8D%87%20webpack%20%E7%9A%84%E6%9E%84%E5%BB%BA%E9%80%9F%E5%BA%A6.html" target="_blank" rel="noopener">这里</a></p>
+<h5 id="w14">14. 怎么配置单页应用？怎么配置多页应用</h5>
+
+<ul>
+<li>单页应用可以理解为 <code>webpack</code> 的标准模式，直接在 <code>entry</code> 中指定单页应用的入口即可</li>
+<li>多页应用的话，可以使用 <code>webpack</code> 的 <code>AutoWebPlugin</code> 来完成简单自动化的构建，但是前提是项目的目录结构必须遵守他预设的规范</li>
+</ul>
+<h5 id="w15">15. 什么是bundle,什么是chunk，什么是module</h5>
+
+<blockquote>
+<p><code>bundle</code> 是由 <code>webpack</code> 打包出来的文件，<code>chunk</code> 是指 <code>webpack</code> 在进行模块的依赖分析的时候，代码分割出来的代码块。<code>module</code>是开发中的单个模块</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="https://wurh.github.io/images/others/weixinshou.png" alt="华Ing WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="https://wurh.github.io/images/others/alifu.png" alt="华Ing Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端-知识-面试/" rel="tag">#前端 知识 面试</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/31/201903311205/" rel="next" title="前端面试《第十三篇》 React">
+                <i class="fa fa-chevron-left"></i> 前端面试《第十三篇》 React
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/31/201904010027/" rel="prev" title="前端面试《第十五篇》 Vue.js">
+                前端面试《第十五篇》 Vue.js <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2019/03/31/201904010024/"
+           data-title="前端面试《第十四篇》 webpack" data-url="http://wurh.github.io/2019/03/31/201904010024/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://wurh.github.io/images/avatar/logo.jpg?123456"
+               alt="华Ing" />
+          <p class="site-author-name" itemprop="name">华Ing</p>
+          <p class="site-description motion-element" itemprop="description">harder and harder</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">49</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wurh" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1674582564/profile?topnav=1&wvr=6" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/wu-rong-hua-56" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://fsiaonma.github.io/" title="sam博客" target="_blank">sam博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://shenjoel.github.io/" title="joel博客" target="_blank">joel博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://firewood1122.github.io" title="firewood博客" target="_blank">firewood博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://reqianduan.com" title="热前端" target="_blank">热前端</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#w1"><span class="nav-number">1.0.0.0.1.</span> <span class="nav-text">1. 对webpack的了解</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#w2"><span class="nav-number">1.0.0.0.2.</span> <span class="nav-text">2. webpack，里面的webpack.config.js怎么配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#w3"><span class="nav-number">1.0.0.0.3.</span> <span class="nav-text">3. webpack本地开发怎么解决跨域的</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#w4"><span class="nav-number">1.0.0.0.4.</span> <span class="nav-text">4. 如何配置多入口文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#w5"><span class="nav-number">1.0.0.0.5.</span> <span class="nav-text">5. webpack与grunt、gulp的不同</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#w6"><span class="nav-number">1.0.0.0.6.</span> <span class="nav-text">6. 有哪些常见的Loader？他们是解决什么问题的</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#w7"><span class="nav-number">1.0.0.0.7.</span> <span class="nav-text">7. 有哪些常见的Plugin？他们是解决什么问题的</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#w8"><span class="nav-number">1.0.0.0.8.</span> <span class="nav-text">8. Loader和Plugin的不同</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#w9"><span class="nav-number">1.0.0.0.9.</span> <span class="nav-text">9. webpack的构建流程是什么</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#w10"><span class="nav-number">1.0.0.0.10.</span> <span class="nav-text">10. 是否写过Loader和Plugin？描述一下编写loader或plugin的思路</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#w11"><span class="nav-number">1.0.0.0.11.</span> <span class="nav-text">11. webpack的热更新是如何做到的？说明其原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#w12"><span class="nav-number">1.0.0.0.12.</span> <span class="nav-text">12. 如何利用webpack来优化前端性能</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#w13"><span class="nav-number">1.0.0.0.13.</span> <span class="nav-text">13. 如何提高webpack的构建速度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#w14"><span class="nav-number">1.0.0.0.14.</span> <span class="nav-text">14. 怎么配置单页应用？怎么配置多页应用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#w15"><span class="nav-number">1.0.0.0.15.</span> <span class="nav-text">15. 什么是bundle,什么是chunk，什么是module</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">华Ing</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"wurh"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

