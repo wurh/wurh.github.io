@@ -91,21 +91,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 
 
-<meta name="description" content="先来个hello world吧在lib 下创建pages 目录, 创建boot_page.dart lib/pages/boot_page.dart 123456789101112131415161718import &apos;package:flutter/material.dart&apos;;class BootPage extends StatefulWidget &amp;#123;  @override  _B">
+<meta name="description" content="前言经过上一遍的介绍，我们大概已经接触了flutter的项目了，这一篇 我们简单的来制作一下启动页面吧。 先来个hello world吧在lib 下创建pages 目录, 创建boot_page.dart lib/pages/boot_page.dart 123456789101112131415161718import &apos;package:flutter/material.dart&apos;;class">
 <meta name="keywords" content="flutter">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Flutter实践 -- 启动页">
 <meta property="og:url" content="http://wurh.github.io/2019/11/05/201911052016/index.html">
 <meta property="og:site_name" content="华Ing&#39;s blog">
-<meta property="og:description" content="先来个hello world吧在lib 下创建pages 目录, 创建boot_page.dart lib/pages/boot_page.dart 123456789101112131415161718import &apos;package:flutter/material.dart&apos;;class BootPage extends StatefulWidget &amp;#123;  @override  _B">
+<meta property="og:description" content="前言经过上一遍的介绍，我们大概已经接触了flutter的项目了，这一篇 我们简单的来制作一下启动页面吧。 先来个hello world吧在lib 下创建pages 目录, 创建boot_page.dart lib/pages/boot_page.dart 123456789101112131415161718import &apos;package:flutter/material.dart&apos;;class">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://wurh.github.io/images/blogs/shijian03/shijian03-1.png">
 <meta property="og:image" content="https://wurh.github.io/images/blogs/shijian03/shijian03-2.jpeg">
 <meta property="og:image" content="https://wurh.github.io/images/blogs/shijian03/shijian03-3.jpeg">
-<meta property="og:updated_time" content="2019-11-06T09:11:18.418Z">
+<meta property="og:updated_time" content="2019-11-06T09:14:07.925Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Flutter实践 -- 启动页">
-<meta name="twitter:description" content="先来个hello world吧在lib 下创建pages 目录, 创建boot_page.dart lib/pages/boot_page.dart 123456789101112131415161718import &apos;package:flutter/material.dart&apos;;class BootPage extends StatefulWidget &amp;#123;  @override  _B">
+<meta name="twitter:description" content="前言经过上一遍的介绍，我们大概已经接触了flutter的项目了，这一篇 我们简单的来制作一下启动页面吧。 先来个hello world吧在lib 下创建pages 目录, 创建boot_page.dart lib/pages/boot_page.dart 123456789101112131415161718import &apos;package:flutter/material.dart&apos;;class">
 <meta name="twitter:image" content="https://wurh.github.io/images/blogs/shijian03/shijian03-1.png">
 
 
@@ -344,7 +344,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       
 
       
-        <h3 id="先来个hello-world吧"><a href="#先来个hello-world吧" class="headerlink" title="先来个hello world吧"></a>先来个hello world吧</h3><p>在lib 下创建pages 目录, 创建boot_page.dart</p>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>经过上一遍的介绍，我们大概已经接触了flutter的项目了，这一篇 我们简单的来制作一下启动页面吧。</p>
+<h3 id="先来个hello-world吧"><a href="#先来个hello-world吧" class="headerlink" title="先来个hello world吧"></a>先来个hello world吧</h3><p>在lib 下创建pages 目录, 创建boot_page.dart</p>
 <p>lib/pages/boot_page.dart</p>
 <figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">'package:flutter/material.dart'</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BootPage</span> <span class="keyword">extends</span> <span class="title">StatefulWidget</span> </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  _BootPageState createState() =&gt; _BootPageState();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">_BootPageState</span> <span class="keyword">extends</span> <span class="title">State</span>&lt;<span class="title">BootPage</span>&gt; </span>&#123;</span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    <span class="keyword">return</span> Scaffold(</span><br><span class="line">      body: Container(</span><br><span class="line">        alignment: Alignment.center,</span><br><span class="line">        child: Text(<span class="string">'Hello World'</span>),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>lib/main.dart</p>
@@ -605,7 +606,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#先来个hello-world吧"><span class="nav-number">1.</span> <span class="nav-text">先来个hello world吧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进入主题，开始编写启动页"><span class="nav-number">2.</span> <span class="nav-text">进入主题，开始编写启动页</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#改造一下main-dart"><span class="nav-number">2.1.</span> <span class="nav-text">改造一下main.dart</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#接着再来一下flutter-run"><span class="nav-number">2.2.</span> <span class="nav-text">接着再来一下flutter run</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#先来个hello-world吧"><span class="nav-number">2.</span> <span class="nav-text">先来个hello world吧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进入主题，开始编写启动页"><span class="nav-number">3.</span> <span class="nav-text">进入主题，开始编写启动页</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#改造一下main-dart"><span class="nav-number">3.1.</span> <span class="nav-text">改造一下main.dart</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#接着再来一下flutter-run"><span class="nav-number">3.2.</span> <span class="nav-text">接着再来一下flutter run</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
